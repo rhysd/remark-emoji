@@ -44,7 +44,7 @@ describe('remark-emoji', () => {
         );
     });
 
-    it.only('replaces in link text', () => {
+    it('replaces in link text', () => {
         const cases = {
             'In inline code, `:dog: is not replaced`': 'In inline code, `:dog: is not replaced`\n',
             'In code, \n```\n:dog: is not replaced\n```': 'In code, \n\n    :dog: is not replaced\n',
