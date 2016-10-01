@@ -55,4 +55,8 @@ describe('remark-emoji', () => {
             Object.keys(cases).map(c => process(c).then(r => assert.equal(r, cases[c])))
         );
     });
+
+    it('can handle an emoji including 2 underscores', () => {
+        return process(':heavy_check_mark:').then(r => assert.equal(r, '✔️\n'));
+    });
 });

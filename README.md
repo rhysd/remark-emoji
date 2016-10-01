@@ -8,7 +8,7 @@ This is a [remark](https://github.com/wooorm/remark) plugin to replace `:emoji:`
 
 ```javascript
 const remark = require('remark');
-const emoji = require('emoji');
+const emoji = require('remark-emoji');
 
 const doc = 'Emojis in this text will be relpaces: :dog: :+1:';
 console.log(remark().use(emoji).process(doc).contents);
