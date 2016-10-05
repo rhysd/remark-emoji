@@ -3,12 +3,24 @@ const emoji = require('node-emoji');
 
 const RE_EMOJI = /:\+1:|:-1:|:\w+:/g;
 
-function plugin() {
+function plugin(_, settings) {
+    const pad = !!(settings || {}).padSpaceAfter;
+
+    function getEmoji(match) {
+        const got = emoji.get(match);
+        if (!pad || got === match) {
+            return got;
+        }
+
+        return got + ' ';
+    }
+
     function transformer(tree) {
         visit(tree, 'text', node => {
-            node.value = node.value.replace(RE_EMOJI, m => emoji.get(m));
+            node.value = node.value.replace(RE_EMOJI, getEmoji);
         });
     }
+
     return transformer;
 }
 

@@ -18,6 +18,19 @@ function process(contents) {
     });
 }
 
+function processPad(contents) {
+    const compiler = remark().use(github).use(headings).use(slug).use(emoji, {padSpaceAfter: true});
+    return new Promise((resolve, reject) => {
+        compiler.process(contents, (err, result) => {
+            if (err) {
+                return reject(err);
+            }
+            resolve(result.contents);
+        });
+    });
+}
+
+
 describe('remark-emoji', () => {
     it('replaces emojis in text', () => {
         const cases = {
@@ -58,5 +71,18 @@ describe('remark-emoji', () => {
 
     it('can handle an emoji including 2 underscores', () => {
         return process(':heavy_check_mark:').then(r => assert.equal(r, '✔️\n'));
+    });
+
+    it('adds an white space after emoji when padSpaceAfter is set to true', () => {
+        const cases = {
+            ':dog: is dog': '🐶  is dog\n',
+            'dog is :dog:': 'dog is 🐶 \n',
+            ':dog: is not :cat:': '🐶  is not 🐱 \n',
+            ':triumph:': '😤 \n'
+        };
+
+        return Promise.all(
+            Object.keys(cases).map(c => processPad(c).then(r => assert.equal(r, cases[c])))
+        );
     });
 });
