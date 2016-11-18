@@ -1,7 +1,7 @@
 const visit = require('unist-util-visit');
 const emoji = require('node-emoji');
 
-const RE_EMOJI = /:\+1:|:-1:|:\w+:/g;
+const RE_EMOJI = /:\+1:|:-1:|:[\w-]+:/g;
 
 function plugin(_, settings) {
     const pad = !!(settings || {}).padSpaceAfter;
