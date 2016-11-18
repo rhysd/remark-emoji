@@ -85,4 +85,15 @@ describe('remark-emoji', () => {
             Object.keys(cases).map(c => processPad(c).then(r => assert.equal(r, cases[c])))
         );
     });
+
+    it('can handle emoji that use dashes to separate words instead of underscores', () => {
+        const cases = {
+            'The Antarctic flag is represented by :flag-aq:': 'The Antarctic flag is represented by 🇦🇶\n',
+            ':man-woman-girl-boy:': '👨‍👩‍👧‍👦\n'
+        };
+
+        return Promise.all(
+            Object.keys(cases).map(c => process(c).then(r => assert.equal(r, cases[c])))
+        );
+    });
 });
