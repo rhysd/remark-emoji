@@ -6,27 +6,17 @@ const slug = require('remark-slug');
 const emoji = require('.');
 
 const compiler = remark().use(github).use(headings).use(slug).use(emoji);
+const padded = remark().use(github).use(headings).use(slug).use(emoji, {padSpaceAfter: true});
 
 function process(contents) {
-    return new Promise((resolve, reject) => {
-        compiler.process(contents, (err, result) => {
-            if (err) {
-                return reject(err);
-            }
-            resolve(result.contents);
-        });
+    return compiler.process(contents).then(function (file) {
+        return file.contents;
     });
 }
 
 function processPad(contents) {
-    const compiler = remark().use(github).use(headings).use(slug).use(emoji, {padSpaceAfter: true});
-    return new Promise((resolve, reject) => {
-        compiler.process(contents, (err, result) => {
-            if (err) {
-                return reject(err);
-            }
-            resolve(result.contents);
-        });
+    return padded.process(contents).then(function (file) {
+        return file.contents;
     });
 }
 

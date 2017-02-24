@@ -3,7 +3,7 @@ const emoji = require('node-emoji');
 
 const RE_EMOJI = /:\+1:|:-1:|:[\w-]+:/g;
 
-function plugin(_, settings) {
+function plugin(settings) {
     const pad = !!(settings || {}).padSpaceAfter;
 
     function getEmoji(match) {
