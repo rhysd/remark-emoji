@@ -16,7 +16,7 @@ function plugin(settings) {
     }
 
     function transformer(tree) {
-        visit(tree, 'text', node => {
+        visit(tree, 'text', function (node) {
             node.value = node.value.replace(RE_EMOJI, getEmoji);
         });
     }
