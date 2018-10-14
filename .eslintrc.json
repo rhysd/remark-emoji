@@ -30,8 +30,7 @@
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true,
-            "modules": true,
-            "experimentalObjectRestSpread": true
+            "modules": true
         }
     }
 }
