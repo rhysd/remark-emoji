@@ -8,15 +8,14 @@ function plugin(settings) {
 
     function getEmoji(match) {
         const got = emoji.get(match);
-        if (!pad || got === match) {
-            return got;
+        if (pad && got !== match) {
+            return got + ' ';
         }
-
-        return got + ' ';
+        return got;
     }
 
     function transformer(tree) {
-        visit(tree, 'text', function (node) {
+        visit(tree, 'text', function(node) {
             node.value = node.value.replace(RE_EMOJI, getEmoji);
         });
     }
