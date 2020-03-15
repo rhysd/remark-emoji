@@ -95,7 +95,8 @@ describe('remark-emoji', () => {
             ':-)': '😃\n',
             'With-in some text :-p, also with some  :o spaces :-)!': 'With-in some text 😛, also with some  😮 spaces 😃!\n',
             'Four char code ]:-)': 'Four char code 😈\n',
-            'No problem with :dog: - :d': 'No problem with 🐶 - 😛\n'
+            'No problem with :dog: - :d': 'No problem with 🐶 - 😛\n',
+            'With double quotes :"D': 'With double quotes 😊\n'
         };
 
         return Promise.all(

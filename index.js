@@ -3,7 +3,7 @@ const emoji = require('node-emoji');
 const emoticon = require('emoticon');
 
 const RE_EMOJI = /:\+1:|:-1:|:[\w-]+:/g;
-const RE_SHORT = /[$@|*',;.=:\-)([\]\\/<>038BOopPsSdDxXzZ]{2,5}/g;
+const RE_SHORT = /[$@|*'",;.=:\-)([\]\\/<>038BOopPsSdDxXzZ]{2,5}/g;
 
 function plugin(settings) {
     const pad = !!(settings || {}).padSpaceAfter;
