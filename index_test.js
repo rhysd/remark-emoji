@@ -49,9 +49,9 @@ describe('remark-emoji', () => {
 
     it('replaces in link text', () => {
         const cases = {
-            'In inline code, `:dog: is not replaced`': 'In inline code, `:dog: is not replaced`\n',
-            'In code, \n```\n:dog: is not replaced\n```': 'In code, \n\n    :dog: is not replaced\n',
-            '[here :dog: and :cat: pictures!](https://example.com)': '[here 🐶 and 🐱 pictures!](https://example.com)\n'
+            'In inline code, `:dog: and :-) is not replaced`': 'In inline code, `:dog: and :-) is not replaced`\n',
+            'In code, \n```\n:dog: and :-) is not replaced\n```': 'In code, \n\n    :dog: and :-) is not replaced\n',
+            '[here :dog: and :cat: and :-) pictures!](https://example.com)': '[here 🐶 and 🐱 and 😃 pictures!](https://example.com)\n'
         };
 
         return Promise.all(
@@ -68,7 +68,9 @@ describe('remark-emoji', () => {
             ':dog: is dog': '🐶  is dog\n',
             'dog is :dog:': 'dog is 🐶 \n',
             ':dog: is not :cat:': '🐶  is not 🐱 \n',
-            ':triumph:': '😤 \n'
+            ':triumph:': '😤 \n',
+            ':-)': '😃 \n',
+            'Smile :-), not >:(!': 'Smile 😃 , not 😠 !\n'
         };
 
         return Promise.all(
@@ -80,6 +82,20 @@ describe('remark-emoji', () => {
         const cases = {
             'The Antarctic flag is represented by :flag-aq:': 'The Antarctic flag is represented by 🇦🇶\n',
             ':man-woman-girl-boy:': '👨‍👩‍👧‍👦\n'
+        };
+
+        return Promise.all(
+            Object.keys(cases).map(c => process(c).then(r => assert.equal(r, cases[c])))
+        );
+    });
+
+    it('can handle emoji shortcodes (emoticon)', () => {
+        const cases = {
+            ':p': '😛\n',
+            ':-)': '😃\n',
+            'With-in some text :-p, also with some  :o spaces :-)!': 'With-in some text 😛, also with some  😮 spaces 😃!\n',
+            'Four char code ]:-)': 'Four char code 😈\n',
+            'No problem with :dog: - :d': 'No problem with 🐶 - 😛\n'
         };
 
         return Promise.all(
