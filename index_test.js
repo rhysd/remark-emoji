@@ -5,7 +5,7 @@ const headings = require('remark-autolink-headings');
 const slug = require('remark-slug');
 const emoji = require('.');
 
-const compiler = remark().use(github).use(headings).use(slug).use(emoji);
+const compiler = remark().use(github).use(headings).use(slug).use(emoji, {emoticon: true});
 const padded = remark().use(github).use(headings).use(slug).use(emoji, {padSpaceAfter: true});
 
 function process(contents) {

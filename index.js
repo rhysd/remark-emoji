@@ -5,8 +5,16 @@ const emoticon = require('emoticon');
 const RE_EMOJI = /:\+1:|:-1:|:[\w-]+:/g;
 const RE_SHORT = /[$@|*'",;.=:\-)([\]\\/<>038BOopPsSdDxXzZ]{2,5}/g;
 
-function plugin(settings) {
-    const pad = !!(settings || {}).padSpaceAfter;
+const DEFAULT_SETTINGS = {
+    padSpaceAfter: false,
+    emoticon: false
+};
+
+function plugin(options) {
+    //const pad = !!(settings || {}).padSpaceAfter;
+    const settings = Object.assign(DEFAULT_SETTINGS, options);
+    const pad = !!settings.padSpaceAfter;
+    const emoticonEnable = !!settings.emoticon;
 
     function getEmojiByShortCode(match) {
         // find emoji by shortcode - full match or with-out last char as it could be from text e.g. :-), 
@@ -32,7 +40,7 @@ function plugin(settings) {
         visit(tree, 'text', function(node) {
             node.value = node.value.replace(RE_EMOJI, getEmoji);
             
-            if (!RE_EMOJI.test(node.value)) {
+            if (!RE_EMOJI.test(node.value) && emoticonEnable) {
                 // emoji regex not matching --> check if shortcode
                 node.value = node.value.replace(RE_SHORT, getEmojiByShortCode);
             }
