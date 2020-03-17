@@ -37,10 +37,9 @@ function plugin(options) {
 
     function transformer(tree) {
         visit(tree, 'text', function(node) {
-            before = node.value;
-            node.value = before.replace(RE_EMOJI, getEmoji);
+            node.value = node.value.replace(RE_EMOJI, getEmoji);
             
-            if (emoticonEnable && node.value === before) {
+            if (emoticonEnable) {
                 // emoji regex not matching --> check if shortcode
                 node.value = node.value.replace(RE_SHORT, getEmojiByShortCode);
             }

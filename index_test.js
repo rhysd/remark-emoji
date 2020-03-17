@@ -38,7 +38,7 @@ describe('remark-emoji', () => {
     it('does not replace emoji-like but not-a-emoji stuffs', () => {
         const cases = {
             'This text does not include emoji.': 'This text does not include emoji.\n',
-            ':++: or :foo: or :dog': ':++: or :foo: or :dog\n',
+            ':++: or :foo: or :cat': ':++: or :foo: or :cat\n',
             '::': '::\n'
         };
 
