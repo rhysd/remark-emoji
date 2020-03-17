@@ -5,6 +5,7 @@ remark-emoji
 This is a [remark](https://github.com/wooorm/remark) plugin to replace `:emoji:` to real UTF-8 emojis in text.
 
 ## Demo
+
 You can find a demo in the following [Codesandbox](https://codesandbox.io/s/remark-emoji-example-osvyi).
 
 ## Usage
