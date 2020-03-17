@@ -11,7 +11,7 @@ const DEFAULT_SETTINGS = {
 };
 
 function plugin(options) {
-    const settings = Object.assign(DEFAULT_SETTINGS, options);
+    const settings = Object.assign({}, DEFAULT_SETTINGS, options);
     const pad = !!settings.padSpaceAfter;
     const emoticonEnable = !!settings.emoticon;
 
