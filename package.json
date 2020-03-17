@@ -32,6 +32,7 @@
     "remark-slug": "^4.2.2"
   },
   "dependencies": {
+    "emoticon": "^3.2.0",
     "node-emoji": "^1.8.1",
     "unist-util-visit": "^1.4.0"
   }
