@@ -40,7 +40,6 @@ function plugin(options) {
             node.value = node.value.replace(RE_EMOJI, getEmoji);
             
             if (emoticonEnable) {
-                // emoji regex not matching --> check if shortcode
                 node.value = node.value.replace(RE_SHORT, getEmojiByShortCode);
             }
         });
