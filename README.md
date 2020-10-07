@@ -1,6 +1,6 @@
 remark-emoji
 ============
-[![Build Status](https://travis-ci.org/rhysd/remark-emoji.svg?branch=master)](https://travis-ci.org/rhysd/remark-emoji)
+[![CI](https://github.com/rhysd/remark-emoji/workflows/CI/badge.svg?branch=master&event=push)](https://github.com/rhysd/remark-emoji/actions?query=workflow%3ACI)
 [![npm](https://badge.fury.io/js/remark-emoji.svg)](https://www.npmjs.com/package/remark-emoji)
 
 This is a [remark](https://github.com/wooorm/remark) plugin to replace `:emoji:` to real UTF-8 emojis in text.
