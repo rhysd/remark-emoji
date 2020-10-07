@@ -3,11 +3,24 @@ on: [push, pull_request]
 
 jobs:
   test-and-lint:
-    name: Check unit tests and linter
+    name: Unit tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # Default version of setup-node is old (v10)
+        node: ['12', '14']
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm ci
+      - run: npm test
+  lint:
+    name: Linting
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
       - run: npm ci
-      - run: npm test
       - run: npm run lint
