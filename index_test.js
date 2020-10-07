@@ -65,7 +65,7 @@ describe('remark-emoji', () => {
         it('replaces in link text', () => {
             const cases = {
                 'In inline code, `:dog: and :-) is not replaced`': 'In inline code, `:dog: and :-) is not replaced`\n',
-                'In code, \n```\n:dog: and :-) is not replaced\n```': 'In code, \n\n    :dog: and :-) is not replaced\n',
+                'In code, \n```\n:dog: and :-) is not replaced\n```': 'In code,\n\n    :dog: and :-) is not replaced\n',
                 '[here :dog: and :cat: and :-) pictures!](https://example.com)': '[here 🐶 and 🐱 and :-) pictures!](https://example.com)\n'
             };
 
@@ -134,7 +134,7 @@ describe('remark-emoji', () => {
         it('replaces in link text', () => {
             const cases = {
                 'In inline code, `:dog: and :-) is not replaced`': 'In inline code, `:dog: and :-) is not replaced`\n',
-                'In code, \n```\n:dog: and :-) is not replaced\n```': 'In code, \n\n    :dog: and :-) is not replaced\n',
+                'In code, \n```\n:dog: and :-) is not replaced\n```': 'In code,\n\n    :dog: and :-) is not replaced\n',
                 '[here :dog: and :cat: and :-) pictures!](https://example.com)': '[here 🐶 and 🐱 and 😃 pictures!](https://example.com)\n'
             };
 
