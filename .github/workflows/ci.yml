@@ -1,0 +1,13 @@
+name: CI
+on: [push, pull_request]
+
+jobs:
+  test-and-lint:
+    name: Check unit tests and linter
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - run: npm ci
+      - run: npm test
+      - run: npm run lint
