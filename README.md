@@ -1,9 +1,9 @@
 remark-emoji
 ============
-[![CI](https://github.com/rhysd/remark-emoji/workflows/CI/badge.svg?branch=master&event=push)](https://github.com/rhysd/remark-emoji/actions?query=workflow%3ACI)
-[![npm](https://badge.fury.io/js/remark-emoji.svg)](https://www.npmjs.com/package/remark-emoji)
+[![CI][ci-badge]][ci]
+[![npm][npm-badge]][npm]
 
-This is a [remark](https://github.com/wooorm/remark) plugin to replace `:emoji:` to real UTF-8 emojis in text.
+This is a [remark](https://github.com/remarkjs/remark) plugin to replace `:emoji:` to real UTF-8 emojis in text.
 
 ## Demo
 
@@ -40,3 +40,10 @@ Default value is `false`.
 ## License
 
 Distributed under [the MIT License](LICENSE).
+
+
+
+[ci-badge]: https://github.com/rhysd/remark-emoji/workflows/CI/badge.svg?branch=master&event=push
+[ci]: https://github.com/rhysd/remark-emoji/actions?query=workflow%3ACI
+[npm-badge]: https://badge.fury.io/js/remark-emoji.svg
+[npm]: https://www.npmjs.com/package/remark-emoji
