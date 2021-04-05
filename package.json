@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
-    "test": "mocha index_test.js"
+    "test-types": "dtslint types",
+    "test": "mocha index_test.js && npm run test-types"
   },
   "repository": {
     "type": "git",
