@@ -11,13 +11,13 @@ declare namespace remarkEmoji {
      * Useful when browser handle emojis with half character length and
      * the following character is hidden.
      *
-     * @default false
+     * @defaultValue false
      */
     padSpaceAfter?: boolean;
     /**
      * Whether to support emoticon shortcodes (e.g. :-) will be replaced by 😃)
      *
-     * @default false
+     * @defaultValue false
      */
     emoticon?: boolean;
   }
