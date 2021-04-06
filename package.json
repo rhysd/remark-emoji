@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
-    "test": "mocha index_test.js"
+    "test-types": "dtslint types",
+    "test": "mocha index_test.js && npm run test-types"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,11 @@
     "remark",
     "plugin"
   ],
+  "types": "types/index.d.ts",
+  "files": [
+    "types/index.d.ts",
+    "index.js"
+  ],
   "author": "rhysd <lin90162@yahoo.co.jp>",
   "license": "MIT",
   "bugs": {
@@ -24,12 +30,15 @@
   },
   "homepage": "https://github.com/rhysd/remark-emoji#readme",
   "devDependencies": {
+    "dtslint": "^4.0.8",
     "eslint": "^7.15.0",
     "mocha": "^8.2.1",
     "remark": "^13.0.0",
     "remark-autolink-headings": "^6.0.1",
     "remark-github": "^10.0.1",
-    "remark-slug": "^6.0.0"
+    "remark-slug": "^6.0.0",
+    "typescript": "^4.2.3",
+    "unified": "^9.2.1"
   },
   "dependencies": {
     "emoticon": "^3.2.0",
