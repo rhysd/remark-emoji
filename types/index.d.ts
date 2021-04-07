@@ -1,6 +1,6 @@
 // TypeScript Version: 3.4
 
-import { Plugin } from "unified";
+import { Plugin } from 'unified';
 
 declare namespace remarkEmoji {
     type Emoji = Plugin<[RemarkEmojiOptions?]>;
