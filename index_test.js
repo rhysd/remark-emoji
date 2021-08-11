@@ -1,5 +1,5 @@
 import assert from 'assert';
-import {remark} from 'remark';
+import { remark } from 'remark';
 import github from 'remark-github';
 import headings from 'remark-autolink-headings';
 import slug from 'remark-slug';
