@@ -1,5 +1,5 @@
-import unified = require('unified');
-import emoji = require('remark-emoji');
+import { unified } from 'unified';
+import emoji from 'remark-emoji';
 
 unified().use(emoji);
 unified().use(emoji, {});
