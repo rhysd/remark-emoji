@@ -1,6 +1,6 @@
 {
   "name": "remark-emoji",
-  "version": "2.2.0",
+  "version": "3.0.0",
   "type": "module",
   "description": "Emoji transformer plugin for Remark",
   "main": "index.js",
