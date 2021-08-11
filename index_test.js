@@ -12,25 +12,25 @@ const padAndEmoticon = remark().use(github).use(headings).use(slug).use(emoji, {
 
 function process(contents) {
     return compiler.process(contents).then(function (file) {
-        return file.contents;
+        return String(file);
     });
 }
 
 function processPad(contents) {
     return padded.process(contents).then(function (file) {
-        return file.contents;
+        return String(file);
     });
 }
 
 function processEmoticon(contents) {
     return emoticon.process(contents).then(function (file) {
-        return file.contents;
+        return String(file);
     });
 }
 
 function processPadAndEmoticon(contents) {
     return padAndEmoticon.process(contents).then(function (file) {
-        return file.contents;
+        return String(file);
     });
 }
 
