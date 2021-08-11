@@ -1,9 +1,9 @@
-const assert = require('assert');
-const remark = require('remark');
-const github = require('remark-github');
-const headings = require('remark-autolink-headings');
-const slug = require('remark-slug');
-const emoji = require('.');
+import assert from 'assert';
+import { remark } from 'remark';
+import github from 'remark-github';
+import headings from 'remark-autolink-headings';
+import slug from 'remark-slug';
+import emoji from './index.js';
 
 const compiler = remark().use(github).use(headings).use(slug).use(emoji);
 const padded = remark().use(github).use(headings).use(slug).use(emoji, { padSpaceAfter: true });
@@ -12,25 +12,25 @@ const padAndEmoticon = remark().use(github).use(headings).use(slug).use(emoji, {
 
 function process(contents) {
     return compiler.process(contents).then(function (file) {
-        return file.contents;
+        return String(file);
     });
 }
 
 function processPad(contents) {
     return padded.process(contents).then(function (file) {
-        return file.contents;
+        return String(file);
     });
 }
 
 function processEmoticon(contents) {
     return emoticon.process(contents).then(function (file) {
-        return file.contents;
+        return String(file);
     });
 }
 
 function processPadAndEmoticon(contents) {
     return padAndEmoticon.process(contents).then(function (file) {
-        return file.contents;
+        return String(file);
     });
 }
 

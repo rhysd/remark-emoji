@@ -2,13 +2,13 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  test-and-lint:
+  test:
     name: Unit tests
     runs-on: ubuntu-latest
     strategy:
       matrix:
         # Default version of setup-node is old (v10)
-        node: ['12', '14']
+        node: ['12', '14', '16']
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2

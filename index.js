@@ -1,6 +1,6 @@
-const visit = require('unist-util-visit');
-const emoji = require('node-emoji');
-const emoticon = require('emoticon');
+import { visit } from 'unist-util-visit';
+import emoji from 'node-emoji';
+import { emoticon } from 'emoticon';
 
 const RE_EMOJI = /:\+1:|:-1:|:[\w-]+:/g;
 const RE_SHORT = /[$@|*'",;.=:\-)([\]\\/<>038BOopPsSdDxXzZ]{2,5}/g;
@@ -10,7 +10,7 @@ const DEFAULT_SETTINGS = {
     emoticon: false,
 };
 
-function plugin(options) {
+export default function plugin(options) {
     const settings = Object.assign({}, DEFAULT_SETTINGS, options);
     const pad = !!settings.padSpaceAfter;
     const emoticonEnable = !!settings.emoticon;
@@ -44,5 +44,3 @@ function plugin(options) {
 
     return transformer;
 }
-
-module.exports = plugin;

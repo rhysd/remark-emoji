@@ -16,12 +16,14 @@ remark().use(emoji [, options]);
 ```
 
 ```javascript
-const remark = require('remark');
-const emoji = require('remark-emoji');
+import {remark} from 'remark';
+import emoji from 'remark-emoji';
 
 const doc = 'Emojis in this text will be replaced: :dog: :+1:';
-console.log(remark().use(emoji).process(doc).contents);
-// => Emojis in this text will be replaced: 🐶 👍
+remark().use(emoji).process(doc).then(file => {
+    console.log(String(file));
+    // => Emojis in this text will be replaced: 🐶 👍
+});
 ```
 
 ## Options
