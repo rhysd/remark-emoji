@@ -1,9 +1,9 @@
-const assert = require('assert');
-const remark = require('remark');
-const github = require('remark-github');
-const headings = require('remark-autolink-headings');
-const slug = require('remark-slug');
-const emoji = require('.');
+import assert from 'assert';
+import {remark} from 'remark';
+import github from 'remark-github';
+import headings from 'remark-autolink-headings';
+import slug from 'remark-slug';
+import emoji from './index.js';
 
 const compiler = remark().use(github).use(headings).use(slug).use(emoji);
 const padded = remark().use(github).use(headings).use(slug).use(emoji, { padSpaceAfter: true });
