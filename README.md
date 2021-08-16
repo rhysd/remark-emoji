@@ -26,6 +26,8 @@ remark().use(emoji).process(doc).then(file => {
 });
 ```
 
+Note that this package is [ESM only][esm-only] from v3.0.0 since remark packages migrated to ESM.
+
 ## Options
 
 ### `options.padSpaceAfter`
@@ -49,3 +51,4 @@ Distributed under [the MIT License](LICENSE).
 [ci]: https://github.com/rhysd/remark-emoji/actions?query=workflow%3ACI
 [npm-badge]: https://badge.fury.io/js/remark-emoji.svg
 [npm]: https://www.npmjs.com/package/remark-emoji
+[esm-only]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c

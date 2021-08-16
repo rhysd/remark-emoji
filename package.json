@@ -2,8 +2,11 @@
   "name": "remark-emoji",
   "version": "3.0.0",
   "type": "module",
+  "engines": {
+    "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+  },
   "description": "Emoji transformer plugin for Remark",
-  "main": "index.js",
+  "exports": "./index.js",
   "scripts": {
     "eslint": "eslint .",
     "prettier": "prettier -c '**/*.js' '**/*.ts'",
