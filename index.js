@@ -4,6 +4,7 @@ import { emoticon } from 'emoticon';
 
 const RE_EMOJI = /:\+1:|:-1:|:[\w-]+:/g;
 const RE_SHORT = /[$@|*'",;.=:\-)([\]\\/<>038BOopPsSdDxXzZ]{2,5}/g;
+const RE_UNDERSTORE = /_/g;
 
 const DEFAULT_SETTINGS = {
     padSpaceAfter: false,
@@ -31,14 +32,14 @@ export default function plugin(options) {
         // Workaround for #19
         if (match.endsWith('_man:') && got === match) {
             // :foo_bar_man: -> man-foo-bar
-            const old = 'man-' + match.slice(1, -5).replaceAll('_', '-');
+            const old = 'man-' + match.slice(1, -5).replace(RE_UNDERSTORE, '-');
             const s = emoji.get(old);
             if (s !== old) {
                 got = s;
             }
         } else if (match.endsWith('_woman:') && got === match) {
             // :foo_bar_woman: -> woman-foo-bar
-            const old = 'woman-' + match.slice(1, -7).replaceAll('_', '-');
+            const old = 'woman-' + match.slice(1, -7).replace(RE_UNDERSTORE, '-');
             const s = emoji.get(old);
             if (s !== old) {
                 got = s;
