@@ -29,7 +29,9 @@ export default function plugin(options) {
     function getEmoji(match) {
         let got = emoji.get(match);
 
-        // Workaround for #19
+        // Workaround for #19. :man-*: and :woman-*: are now :*_man: and :*_woman: on GitHub. node-emoji
+        // does not support the new short codes. Convert new to old.
+        // TODO: Remove this workaround when this PR is merged and shipped: https://github.com/omnidan/node-emoji/pull/112
         if (match.endsWith('_man:') && got === match) {
             // :foo_bar_man: -> man-foo-bar
             const old = 'man-' + match.slice(1, -5).replace(RE_UNDERSTORE, '-');
