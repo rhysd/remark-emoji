@@ -93,6 +93,16 @@ describe('remark-emoji', () => {
 
             return Promise.all(Object.keys(cases).map(c => process(c).then(r => assert.equal(r, cases[c]))));
         });
+
+        it('handles man-*/woman-* with *_man/*_woman (#19)', () => {
+            const cases = {
+                'Hello, :walking_man:': 'Hello, \uD83D\uDEB6\u200D\u2642\uFE0F\n',
+                'Hello, :walking_woman:': 'Hello, \uD83D\uDEB6\u200D\u2640\uFE0F\n',
+                'Hello, :mountain_biking_woman:': 'Hello, \uD83D\uDEB5\u200D\u2640\uFE0F\n',
+            };
+
+            return Promise.all(Object.keys(cases).map(c => process(c).then(r => assert.equal(r, cases[c]))));
+        });
     });
 
     describe('emoticon support', () => {
