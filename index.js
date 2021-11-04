@@ -26,7 +26,25 @@ export default function plugin(options) {
     }
 
     function getEmoji(match) {
-        const got = emoji.get(match);
+        let got = emoji.get(match);
+
+        // Workaround for #19
+        if (match.endsWith('_man:') && got === match) {
+            // :foo_bar_man: -> man-foo-bar
+            const old = 'man-' + match.slice(1, -5).replaceAll('_', '-');
+            const s = emoji.get(old);
+            if (s !== old) {
+                got = s;
+            }
+        } else if (match.endsWith('_woman:') && got === match) {
+            // :foo_bar_woman: -> woman-foo-bar
+            const old = 'woman-' + match.slice(1, -7).replaceAll('_', '-');
+            const s = emoji.get(old);
+            if (s !== old) {
+                got = s;
+            }
+        }
+
         if (pad && got !== match) {
             return got + ' ';
         }
