@@ -75,9 +75,9 @@ describe('remark-emoji', () => {
         it('adds an white space after emoji when padSpaceAfter is set to true', () => {
             const cases = {
                 ':dog: is dog': '🐶  is dog\n',
-                'dog is :dog:': 'dog is 🐶 \n',
-                ':dog: is not :cat:': '🐶  is not 🐱 \n',
-                ':triumph:': '😤 \n',
+                'dog is :dog:': 'dog is 🐶&#x20;\n',
+                ':dog: is not :cat:': '🐶  is not 🐱&#x20;\n',
+                ':triumph:': '😤&#x20;\n',
                 ':-)': ':-)\n',
                 'Smile :-), not >:(!': 'Smile :-), not >:(!\n',
             };
@@ -145,10 +145,10 @@ describe('remark-emoji', () => {
         it('adds an white space after emoji when padSpaceAfter is set to true', () => {
             const cases = {
                 ':dog: is dog': '🐶  is dog\n',
-                'dog is :dog:': 'dog is 🐶 \n',
-                ':dog: is not :cat:': '🐶  is not 🐱 \n',
-                ':triumph:': '😤 \n',
-                ':-)': '😃 \n',
+                'dog is :dog:': 'dog is 🐶&#x20;\n',
+                ':dog: is not :cat:': '🐶  is not 🐱&#x20;\n',
+                ':triumph:': '😤&#x20;\n',
+                ':-)': '😃&#x20;\n',
                 'Smile :-), not >:(!': 'Smile 😃 , not 😠 !\n',
             };
 
