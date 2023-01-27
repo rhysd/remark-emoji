@@ -52,7 +52,7 @@
   },
   "dependencies": {
     "emoticon": "^4.0.1",
-    "node-emoji": "^1.11.0",
-    "unist-util-visit": "^4.1.2"
+    "mdast-util-find-and-replace": "^2.2.2",
+    "node-emoji": "^1.11.0"
   }
 }

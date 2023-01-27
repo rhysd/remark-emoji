@@ -1,6 +1,6 @@
-import { visit } from 'unist-util-visit';
 import emoji from 'node-emoji';
 import { emoticon } from 'emoticon';
+import { findAndReplace } from 'mdast-util-find-and-replace';
 
 const RE_EMOJI = /:\+1:|:-1:|:[\w-]+:/g;
 const RE_SHORT = /[$@|*'",;.=:\-)([\]\\/<>038BOopPsSdDxXzZ]{2,5}/g;
@@ -16,7 +16,7 @@ export default function plugin(options) {
     const pad = !!settings.padSpaceAfter;
     const emoticonEnable = !!settings.emoticon;
 
-    function getEmojiByShortCode(match) {
+    function getEmoticon(match) {
         // find emoji by shortcode - full match or with-out last char as it could be from text e.g. :-),
         const iconFull = emoticon.find(e => e.emoticons.includes(match)); // full match
         const iconPart = emoticon.find(e => e.emoticons.includes(match.slice(0, -1))); // second search pattern
@@ -55,12 +55,11 @@ export default function plugin(options) {
     }
 
     function transformer(tree) {
-        visit(tree, 'text', function (node) {
-            node.value = node.value.replace(RE_EMOJI, getEmoji);
-            if (emoticonEnable) {
-                node.value = node.value.replace(RE_SHORT, getEmojiByShortCode);
-            }
-        });
+        const handlers = [[RE_EMOJI, getEmoji]];
+        if (emoticonEnable) {
+            handlers.push([RE_SHORT, getEmoticon]);
+        }
+        findAndReplace(tree, handlers);
     }
 
     return transformer;
