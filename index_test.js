@@ -193,10 +193,13 @@ describe('remark-emoji', () => {
         it('wraps emoji with span', () => {
             const tests = {
                 ':dog:': '<p><span role="img" aria-label="dog emoji">🐶</span></p>\n',
-                ':dog: :cat:': '<p><span role="img" aria-label="dog emoji">🐶</span> <span role="img" aria-label="cat emoji">🐱</span></p>\n',
+                ':dog: :cat:':
+                    '<p><span role="img" aria-label="dog emoji">🐶</span> <span role="img" aria-label="cat emoji">🐱</span></p>\n',
                 ':-)': '<p><span role="img" aria-label="smiley emoticon">😃</span></p>\n',
-                'Hello, :walking_man:': '<p>Hello, <span role="img" aria-label="walking man emoji">\uD83D\uDEB6\u200D\u2642\uFE0F</span></p>\n',
-                'Hello, :man-walking:': '<p>Hello, <span role="img" aria-label="man walking emoji">\uD83D\uDEB6\u200D\u2642\uFE0F</span></p>\n',
+                'Hello, :walking_man:':
+                    '<p>Hello, <span role="img" aria-label="walking man emoji">\uD83D\uDEB6\u200D\u2642\uFE0F</span></p>\n',
+                'Hello, :man-walking:':
+                    '<p>Hello, <span role="img" aria-label="man walking emoji">\uD83D\uDEB6\u200D\u2642\uFE0F</span></p>\n',
                 ':+1:': '<p><span role="img" aria-label="+1 emoji">👍</span></p>\n',
                 ':-1:': '<p><span role="img" aria-label="-1 emoji">👎</span></p>\n',
             };
