@@ -30,6 +30,32 @@ Note that this package is [ESM only][esm-only] from v3.0.0 since remark packages
 
 ## Options
 
+### `options.accessible`
+
+Setting to `true` makes the converted emoji text accessible with `role` and `aria-label` properties. Each emoji
+text is wrapped with `<span>` element.
+
+For example,
+
+```javascript
+import {remark} from 'remark';
+import toHtml from 'remark-html';
+import emoji from 'remark-emoji';
+
+const compiler = remark().use(emoji, { accessible: true }).use(toHtml);
+compiler.process('Hello :dog:!').then(file => {
+    console.log(String(file));
+});
+```
+
+yields
+
+```html
+Hello <span aria-label="dog emoji">🐶</span>!
+```
+
+Default value is `false`.
+
 ### `options.padSpaceAfter`
 
 Setting to `true` means that an extra whitespace is added after emoji.
@@ -38,8 +64,8 @@ Default value is `false`.
 
 ### `options.emoticon`
 
-Setting to `true` means that [emoticon](https://www.npmjs.com/package/emoticon) shortcodes are supported (e.g. :-) will be replaced by 😃).
-Default value is `false`.
+Setting to `true` means that [emoticon](https://www.npmjs.com/package/emoticon) shortcodes are supported (e.g. :-)
+will be replaced by 😃). Default value is `false`.
 
 ## License
 
