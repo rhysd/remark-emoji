@@ -4,6 +4,7 @@ remark-emoji
 [![npm][npm-badge]][npm]
 
 This is a [remark](https://github.com/remarkjs/remark) plugin to replace `:emoji:` to real UTF-8 emojis in text.
+Accessibility support and Emoticon support are optionally available.
 
 ## Demo
 
@@ -32,17 +33,25 @@ Note that this package is [ESM only][esm-only] from v3.0.0 since remark packages
 
 ### `options.accessible`
 
-Setting to `true` makes the converted emoji text accessible with `role` and `aria-label` properties. Each emoji
-text is wrapped with `<span>` element.
+Setting to `true` makes the converted emoji text accessible with `role` and `aria-label` attributes. Each emoji
+text is wrapped with `<span>` element. Note that `role` attribute is not allowed by default. Please add it to
+the sanitization schema used by remark's HTML transformer.
 
 For example,
 
 ```javascript
 import {remark} from 'remark';
 import toHtml from 'remark-html';
+import {defaultSchema} from 'hast-util-sanitize'
 import emoji from 'remark-emoji';
 
-const compiler = remark().use(emoji, { accessible: true }).use(toHtml);
+// Allow using `role` attribute in transformed HTML document
+const schema = structuredClone(defaultSchema);
+schema.attributes['*'].push('role');
+
+const compiler = remark()
+    .use(emoji, { accessible: true })
+    .use(toHtml, { sanitize: schema });
 compiler.process('Hello :dog:!').then(file => {
     console.log(String(file));
 });
@@ -51,7 +60,7 @@ compiler.process('Hello :dog:!').then(file => {
 yields
 
 ```html
-Hello <span aria-label="dog emoji">🐶</span>!
+Hello <span role="img" aria-label="dog emoji">🐶</span>!
 ```
 
 Default value is `false`.

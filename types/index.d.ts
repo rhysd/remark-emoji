@@ -4,6 +4,13 @@ import { Plugin } from 'unified';
 
 interface RemarkEmojiOptions {
     /**
+     * Makes converted emoji and emoticon texts accessible by wrapping them with
+     * `span` element setting `role` and `aria-label` attributes.
+     *
+     * @defaultValue false
+     */
+    accessible?: boolean;
+    /**
      * Adds an extra whitespace after emoji.
      * Useful when browser handle emojis with half character length and
      * the following character is hidden.

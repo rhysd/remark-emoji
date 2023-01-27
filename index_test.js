@@ -3,12 +3,14 @@ import { remark } from 'remark';
 import github from 'remark-github';
 import headings from 'remark-autolink-headings';
 import slug from 'remark-slug';
+import remarkHtml from 'remark-html';
 import emoji from './index.js';
 
 const compiler = remark().use(github).use(headings).use(slug).use(emoji);
 const padded = remark().use(github).use(headings).use(slug).use(emoji, { padSpaceAfter: true });
 const emoticon = remark().use(github).use(headings).use(slug).use(emoji, { emoticon: true });
 const padAndEmoticon = remark().use(github).use(headings).use(slug).use(emoji, { padSpaceAfter: true, emoticon: true });
+const ariaHtml = remark().use(emoji, { emoticon: true, accessible: true }).use(remarkHtml, { sanitize: false });
 
 function process(contents) {
     return compiler.process(contents).then(function (file) {
@@ -30,6 +32,12 @@ function processEmoticon(contents) {
 
 function processPadAndEmoticon(contents) {
     return padAndEmoticon.process(contents).then(function (file) {
+        return String(file);
+    });
+}
+
+function processAriaHtml(contents) {
+    return ariaHtml.process(contents).then(function (file) {
         return String(file);
     });
 }
@@ -178,6 +186,22 @@ describe('remark-emoji', () => {
             };
 
             return Promise.all(Object.keys(cases).map(c => processEmoticon(c).then(r => assert.equal(r, cases[c]))));
+        });
+    });
+
+    describe('accessibility support', () => {
+        it('wraps emoji with span', () => {
+            const tests = {
+                ':dog:': '<p><span role="img" aria-label="dog emoji">🐶</span></p>\n',
+                ':dog: :cat:': '<p><span role="img" aria-label="dog emoji">🐶</span> <span role="img" aria-label="cat emoji">🐱</span></p>\n',
+                ':-)': '<p><span role="img" aria-label="smiley emoticon">😃</span></p>\n',
+                'Hello, :walking_man:': '<p>Hello, <span role="img" aria-label="walking man emoji">\uD83D\uDEB6\u200D\u2642\uFE0F</span></p>\n',
+                'Hello, :man-walking:': '<p>Hello, <span role="img" aria-label="man walking emoji">\uD83D\uDEB6\u200D\u2642\uFE0F</span></p>\n',
+                ':+1:': '<p><span role="img" aria-label="+1 emoji">👍</span></p>\n',
+                ':-1:': '<p><span role="img" aria-label="-1 emoji">👎</span></p>\n',
+            };
+
+            return Promise.all(Object.keys(tests).map(t => processAriaHtml(t).then(h => assert.equal(h, tests[t]))));
         });
     });
 });
