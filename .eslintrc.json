@@ -1,34 +1,39 @@
 {
   "rules": {
-    "indent": [
-      2,
-      4
-    ],
-    "quotes": [
-      2,
-      "single"
-        ],
-        "linebreak-style": [
-          2,
-          "unix"
-        ],
-        "semi": [
-          2,
-          "always"
-        ],
-        "no-console": 2
+    "indent": ["error", 4],
+    "quotes": ["error", "single"],
+    "linebreak-style": ["error", "unix"],
+    "semi": ["error", "always"],
+    "no-console": "error"
   },
   "env": {
     "es2022": true,
     "node": true,
     "mocha": true
   },
-  "extends": "eslint:recommended",
+  "plugins": ["node"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:node/recommended",
+    "prettier"
+  ],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true,
       "modules": true
     },
     "sourceType": "module"
-  }
+  },
+  "overrides": [
+      {
+          "files": ["index.js"],
+          "plugins": ["security"],
+          "extends": ["plugin:security/recommended"]
+      },
+      {
+          "files": ["index_test.js"],
+          "plugins": ["mocha"],
+          "extends": ["plugin:mocha/recommended"]
+      }
+  ]
 }
