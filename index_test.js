@@ -187,6 +187,11 @@ describe('remark-emoji', () => {
 
             return Promise.all(Object.keys(cases).map(c => processEmoticon(c).then(r => assert.equal(r, cases[c]))));
         });
+
+        it('should not break ::: (#23)', () => {
+            const input = '::: danger Title\n\nbla bla bla\n\n:::\n';
+            return processEmoticon(input).then(output => assert.equal(output, input));
+        });
     });
 
     describe('accessibility support', () => {
