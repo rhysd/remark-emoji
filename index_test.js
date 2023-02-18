@@ -12,76 +12,56 @@ const emoticon = remark().use(github).use(headings).use(slug).use(emoji, { emoti
 const padAndEmoticon = remark().use(github).use(headings).use(slug).use(emoji, { padSpaceAfter: true, emoticon: true });
 const ariaHtml = remark().use(emoji, { emoticon: true, accessible: true }).use(remarkHtml, { sanitize: false });
 
-function process(contents) {
-    return compiler.process(contents).then(function (file) {
-        return String(file);
-    });
-}
-
-function processPad(contents) {
-    return padded.process(contents).then(function (file) {
-        return String(file);
-    });
-}
-
-function processEmoticon(contents) {
-    return emoticon.process(contents).then(function (file) {
-        return String(file);
-    });
-}
-
-function processPadAndEmoticon(contents) {
-    return padAndEmoticon.process(contents).then(function (file) {
-        return String(file);
-    });
-}
-
-function processAriaHtml(contents) {
-    return ariaHtml.process(contents).then(function (file) {
-        return String(file);
-    });
-}
-
-describe('remark-emoji', () => {
-    describe('default compiler', () => {
-        it('replaces emojis in text', () => {
-            const cases = {
+describe('remark-emoji', function() {
+    describe('default compiler', function() {
+        it('replaces emojis in text', async function() {
+            const tests = {
                 'This is :dog:': 'This is 🐶\n',
                 ':dog: is not :cat:': '🐶 is not 🐱\n',
                 'Please vote with :+1: or :-1:': 'Please vote with 👍 or 👎\n',
                 ':triumph:': '😤\n',
             };
 
-            return Promise.all(Object.keys(cases).map(c => process(c).then(r => assert.equal(r, cases[c]))));
+            for (const input of Object.keys(tests)) {
+                const result = await compiler.process(input);
+                assert.equal(String(result), tests[input]);
+            }
         });
 
-        it('does not replace emoji-like but not-a-emoji stuffs', () => {
-            const cases = {
+        it('does not replace emoji-like but not-a-emoji stuffs', async function() {
+            const tests = {
                 'This text does not include emoji.': 'This text does not include emoji.\n',
                 ':++: or :foo: or :cat': ':++: or :foo: or :cat\n',
                 '::': '::\n',
             };
 
-            return Promise.all(Object.keys(cases).map(c => process(c).then(r => assert.equal(r, cases[c]))));
+            for (const input of Object.keys(tests)) {
+                const result = await compiler.process(input);
+                assert.equal(String(result), tests[input]);
+            }
         });
 
-        it('replaces in link text', () => {
-            const cases = {
+        it('replaces in link text', async function() {
+            const tests = {
                 'In inline code, `:dog: and :-) is not replaced`': 'In inline code, `:dog: and :-) is not replaced`\n',
                 'In code, \n```\n:dog: and :-) is not replaced\n```': 'In code,\n\n    :dog: and :-) is not replaced\n',
                 '[here :dog: and :cat: and :-) pictures!](https://example.com)':
                     '[here 🐶 and 🐱 and :-) pictures!](https://example.com)\n',
             };
 
-            return Promise.all(Object.keys(cases).map(c => process(c).then(r => assert.equal(r, cases[c]))));
+            for (const input of Object.keys(tests)) {
+                const result = await compiler.process(input);
+                assert.equal(String(result), tests[input]);
+            }
         });
 
-        it('can handle an emoji including 2 underscores', () => {
-            return process(':heavy_check_mark:').then(r => assert.equal(r, '✔️\n'));
+        it('can handle an emoji including 2 underscores', async function() {
+            const result = await compiler.process(':heavy_check_mark:');
+            assert.equal(String(result), '✔️\n');
         });
 
-        it('adds an white space after emoji when padSpaceAfter is set to true', () => {
-            const cases = {
+        it('adds an white space after emoji when padSpaceAfter is set to true', async function() {
+            const tests = {
                 ':dog: is dog': '🐶  is dog\n',
                 'dog is :dog:': 'dog is 🐶&#x20;\n',
                 ':dog: is not :cat:': '🐶  is not 🐱&#x20;\n',
@@ -90,68 +70,87 @@ describe('remark-emoji', () => {
                 'Smile :-), not >:(!': 'Smile :-), not >:(!\n',
             };
 
-            return Promise.all(Object.keys(cases).map(c => processPad(c).then(r => assert.equal(r, cases[c]))));
+            for (const input of Object.keys(tests)) {
+                const result = await padded.process(input);
+                assert.equal(String(result), tests[input]);
+            }
         });
 
-        it('can handle emoji that use dashes to separate words instead of underscores', () => {
-            const cases = {
+        it('can handle emoji that use dashes to separate words instead of underscores', async function() {
+            const tests = {
                 'The Antarctic flag is represented by :flag-aq:': 'The Antarctic flag is represented by 🇦🇶\n',
                 ':man-woman-girl-boy:': '👨‍👩‍👧‍👦\n',
             };
 
-            return Promise.all(Object.keys(cases).map(c => process(c).then(r => assert.equal(r, cases[c]))));
+            for (const input of Object.keys(tests)) {
+                const result = await compiler.process(input);
+                assert.equal(String(result), tests[input]);
+            }
         });
 
-        it('handles man-*/woman-* with *_man/*_woman (#19)', () => {
-            const cases = {
+        it('handles man-*/woman-* with *_man/*_woman (#19)', async function() {
+            const tests = {
                 'Hello, :walking_man:': 'Hello, \uD83D\uDEB6\u200D\u2642\uFE0F\n',
                 'Hello, :walking_woman:': 'Hello, \uD83D\uDEB6\u200D\u2640\uFE0F\n',
                 'Hello, :mountain_biking_woman:': 'Hello, \uD83D\uDEB5\u200D\u2640\uFE0F\n',
             };
 
-            return Promise.all(Object.keys(cases).map(c => process(c).then(r => assert.equal(r, cases[c]))));
+            for (const input of Object.keys(tests)) {
+                const result = await compiler.process(input);
+                assert.equal(String(result), tests[input]);
+            }
         });
     });
 
-    describe('emoticon support', () => {
-        it('replaces emojis in text', () => {
-            const cases = {
+    describe('emoticon support', function() {
+        it('replaces emojis in text', async function() {
+            const tests = {
                 'This is :dog:': 'This is 🐶\n',
                 ':dog: is not :cat:': '🐶 is not 🐱\n',
                 'Please vote with :+1: or :-1:': 'Please vote with 👍 or 👎\n',
                 ':triumph:': '😤\n',
             };
 
-            return Promise.all(Object.keys(cases).map(c => processEmoticon(c).then(r => assert.equal(r, cases[c]))));
+            for (const input of Object.keys(tests)) {
+                const result = await emoticon.process(input);
+                assert.equal(String(result), tests[input]);
+            }
         });
 
-        it('does not replace emoji-like but not-a-emoji stuffs', () => {
-            const cases = {
+        it('does not replace emoji-like but not-a-emoji stuffs', async function() {
+            const tests = {
                 'This text does not include emoji.': 'This text does not include emoji.\n',
                 ':++: or :foo: or :cat': ':++: or :foo: or :cat\n',
                 '::': '::\n',
             };
 
-            return Promise.all(Object.keys(cases).map(c => processEmoticon(c).then(r => assert.equal(r, cases[c]))));
+            for (const input of Object.keys(tests)) {
+                const result = await emoticon.process(input);
+                assert.equal(String(result), tests[input]);
+            }
         });
 
-        it('replaces in link text', () => {
-            const cases = {
+        it('replaces in link text', async function() {
+            const tests = {
                 'In inline code, `:dog: and :-) is not replaced`': 'In inline code, `:dog: and :-) is not replaced`\n',
                 'In code, \n```\n:dog: and :-) is not replaced\n```': 'In code,\n\n    :dog: and :-) is not replaced\n',
                 '[here :dog: and :cat: and :-) pictures!](https://example.com)':
                     '[here 🐶 and 🐱 and 😃 pictures!](https://example.com)\n',
             };
 
-            return Promise.all(Object.keys(cases).map(c => processEmoticon(c).then(r => assert.equal(r, cases[c]))));
+            for (const input of Object.keys(tests)) {
+                const result = await emoticon.process(input);
+                assert.equal(String(result), tests[input]);
+            }
         });
 
-        it('can handle an emoji including 2 underscores', () => {
-            return processEmoticon(':heavy_check_mark:').then(r => assert.equal(r, '✔️\n'));
+        it('can handle an emoji including 2 underscores', async function() {
+            const result = await emoticon.process(':heavy_check_mark:');
+            assert.equal(String(result), '✔️\n');
         });
 
-        it('adds an white space after emoji when padSpaceAfter is set to true', () => {
-            const cases = {
+        it('adds an white space after emoji when padSpaceAfter is set to true', async function() {
+            const tests = {
                 ':dog: is dog': '🐶  is dog\n',
                 'dog is :dog:': 'dog is 🐶&#x20;\n',
                 ':dog: is not :cat:': '🐶  is not 🐱&#x20;\n',
@@ -160,22 +159,26 @@ describe('remark-emoji', () => {
                 'Smile :-), not >:(!': 'Smile 😃 , not 😠 !\n',
             };
 
-            return Promise.all(
-                Object.keys(cases).map(c => processPadAndEmoticon(c).then(r => assert.equal(r, cases[c])))
-            );
+            for (const input of Object.keys(tests)) {
+                const result = await padAndEmoticon.process(input);
+                assert.equal(String(result), tests[input]);
+            }
         });
 
-        it('can handle emoji that use dashes to separate words instead of underscores', () => {
-            const cases = {
+        it('can handle emoji that use dashes to separate words instead of underscores', async function() {
+            const tests = {
                 'The Antarctic flag is represented by :flag-aq:': 'The Antarctic flag is represented by 🇦🇶\n',
                 ':man-woman-girl-boy:': '👨‍👩‍👧‍👦\n',
             };
 
-            return Promise.all(Object.keys(cases).map(c => processEmoticon(c).then(r => assert.equal(r, cases[c]))));
+            for (const input of Object.keys(tests)) {
+                const result = await emoticon.process(input);
+                assert.equal(String(result), tests[input]);
+            }
         });
 
-        it('can handle emoji shortcodes (emoticon)', () => {
-            const cases = {
+        it('can handle emoji shortcodes (emoticon)', async function() {
+            const tests = {
                 ':p': '😛\n',
                 ':-)': '😃\n',
                 'With-in some text :-p, also with some  :o spaces :-)!':
@@ -185,17 +188,21 @@ describe('remark-emoji', () => {
                 'With double quotes :"D': 'With double quotes 😊\n',
             };
 
-            return Promise.all(Object.keys(cases).map(c => processEmoticon(c).then(r => assert.equal(r, cases[c]))));
+            for (const input of Object.keys(tests)) {
+                const result = await emoticon.process(input);
+                assert.equal(String(result), tests[input]);
+            }
         });
 
-        it('should not break ::: (#23)', () => {
+        it('should not break ::: (#23)', async function() {
             const input = '::: danger Title\n\nbla bla bla\n\n:::\n';
-            return processEmoticon(input).then(output => assert.equal(output, input));
+            const result = await emoticon.process(input);
+            assert.equal(String(result), input);
         });
     });
 
-    describe('accessibility support', () => {
-        it('wraps emoji with span', () => {
+    describe('accessibility support', function() {
+        it('wraps emoji with span', async function() {
             const tests = {
                 ':dog:': '<p><span role="img" aria-label="dog emoji">🐶</span></p>\n',
                 ':dog: :cat:':
@@ -209,7 +216,10 @@ describe('remark-emoji', () => {
                 ':-1:': '<p><span role="img" aria-label="-1 emoji">👎</span></p>\n',
             };
 
-            return Promise.all(Object.keys(tests).map(t => processAriaHtml(t).then(h => assert.equal(h, tests[t]))));
+            for (const input of Object.keys(tests)) {
+                const result = await ariaHtml.process(input);
+                assert.equal(String(result), tests[input]);
+            }
         });
     });
 });
