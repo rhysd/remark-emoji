@@ -19,12 +19,9 @@
         "no-console": 2
   },
   "env": {
-    "es6": true,
+    "es2022": true,
     "node": true,
     "mocha": true
-  },
-  "parserOptions": {
-    "ecmaVersion": 6
   },
   "extends": "eslint:recommended",
   "parserOptions": {

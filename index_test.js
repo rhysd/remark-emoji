@@ -12,9 +12,9 @@ const emoticon = remark().use(github).use(headings).use(slug).use(emoji, { emoti
 const padAndEmoticon = remark().use(github).use(headings).use(slug).use(emoji, { padSpaceAfter: true, emoticon: true });
 const ariaHtml = remark().use(emoji, { emoticon: true, accessible: true }).use(remarkHtml, { sanitize: false });
 
-describe('remark-emoji', function() {
-    describe('default compiler', function() {
-        it('replaces emojis in text', async function() {
+describe('remark-emoji', function () {
+    describe('default compiler', function () {
+        it('replaces emojis in text', async function () {
             const tests = {
                 'This is :dog:': 'This is 🐶\n',
                 ':dog: is not :cat:': '🐶 is not 🐱\n',
@@ -28,7 +28,7 @@ describe('remark-emoji', function() {
             }
         });
 
-        it('does not replace emoji-like but not-a-emoji stuffs', async function() {
+        it('does not replace emoji-like but not-a-emoji stuffs', async function () {
             const tests = {
                 'This text does not include emoji.': 'This text does not include emoji.\n',
                 ':++: or :foo: or :cat': ':++: or :foo: or :cat\n',
@@ -41,7 +41,7 @@ describe('remark-emoji', function() {
             }
         });
 
-        it('replaces in link text', async function() {
+        it('replaces in link text', async function () {
             const tests = {
                 'In inline code, `:dog: and :-) is not replaced`': 'In inline code, `:dog: and :-) is not replaced`\n',
                 'In code, \n```\n:dog: and :-) is not replaced\n```': 'In code,\n\n    :dog: and :-) is not replaced\n',
@@ -55,12 +55,12 @@ describe('remark-emoji', function() {
             }
         });
 
-        it('can handle an emoji including 2 underscores', async function() {
+        it('can handle an emoji including 2 underscores', async function () {
             const result = await compiler.process(':heavy_check_mark:');
             assert.equal(String(result), '✔️\n');
         });
 
-        it('adds an white space after emoji when padSpaceAfter is set to true', async function() {
+        it('adds an white space after emoji when padSpaceAfter is set to true', async function () {
             const tests = {
                 ':dog: is dog': '🐶  is dog\n',
                 'dog is :dog:': 'dog is 🐶&#x20;\n',
@@ -76,7 +76,7 @@ describe('remark-emoji', function() {
             }
         });
 
-        it('can handle emoji that use dashes to separate words instead of underscores', async function() {
+        it('can handle emoji that use dashes to separate words instead of underscores', async function () {
             const tests = {
                 'The Antarctic flag is represented by :flag-aq:': 'The Antarctic flag is represented by 🇦🇶\n',
                 ':man-woman-girl-boy:': '👨‍👩‍👧‍👦\n',
@@ -88,7 +88,7 @@ describe('remark-emoji', function() {
             }
         });
 
-        it('handles man-*/woman-* with *_man/*_woman (#19)', async function() {
+        it('handles man-*/woman-* with *_man/*_woman (#19)', async function () {
             const tests = {
                 'Hello, :walking_man:': 'Hello, \uD83D\uDEB6\u200D\u2642\uFE0F\n',
                 'Hello, :walking_woman:': 'Hello, \uD83D\uDEB6\u200D\u2640\uFE0F\n',
@@ -102,8 +102,8 @@ describe('remark-emoji', function() {
         });
     });
 
-    describe('emoticon support', function() {
-        it('replaces emojis in text', async function() {
+    describe('emoticon support', function () {
+        it('replaces emojis in text', async function () {
             const tests = {
                 'This is :dog:': 'This is 🐶\n',
                 ':dog: is not :cat:': '🐶 is not 🐱\n',
@@ -117,7 +117,7 @@ describe('remark-emoji', function() {
             }
         });
 
-        it('does not replace emoji-like but not-a-emoji stuffs', async function() {
+        it('does not replace emoji-like but not-a-emoji stuffs', async function () {
             const tests = {
                 'This text does not include emoji.': 'This text does not include emoji.\n',
                 ':++: or :foo: or :cat': ':++: or :foo: or :cat\n',
@@ -130,7 +130,7 @@ describe('remark-emoji', function() {
             }
         });
 
-        it('replaces in link text', async function() {
+        it('replaces in link text', async function () {
             const tests = {
                 'In inline code, `:dog: and :-) is not replaced`': 'In inline code, `:dog: and :-) is not replaced`\n',
                 'In code, \n```\n:dog: and :-) is not replaced\n```': 'In code,\n\n    :dog: and :-) is not replaced\n',
@@ -144,12 +144,12 @@ describe('remark-emoji', function() {
             }
         });
 
-        it('can handle an emoji including 2 underscores', async function() {
+        it('can handle an emoji including 2 underscores', async function () {
             const result = await emoticon.process(':heavy_check_mark:');
             assert.equal(String(result), '✔️\n');
         });
 
-        it('adds an white space after emoji when padSpaceAfter is set to true', async function() {
+        it('adds an white space after emoji when padSpaceAfter is set to true', async function () {
             const tests = {
                 ':dog: is dog': '🐶  is dog\n',
                 'dog is :dog:': 'dog is 🐶&#x20;\n',
@@ -165,7 +165,7 @@ describe('remark-emoji', function() {
             }
         });
 
-        it('can handle emoji that use dashes to separate words instead of underscores', async function() {
+        it('can handle emoji that use dashes to separate words instead of underscores', async function () {
             const tests = {
                 'The Antarctic flag is represented by :flag-aq:': 'The Antarctic flag is represented by 🇦🇶\n',
                 ':man-woman-girl-boy:': '👨‍👩‍👧‍👦\n',
@@ -177,7 +177,7 @@ describe('remark-emoji', function() {
             }
         });
 
-        it('can handle emoji shortcodes (emoticon)', async function() {
+        it('can handle emoji shortcodes (emoticon)', async function () {
             const tests = {
                 ':p': '😛\n',
                 ':-)': '😃\n',
@@ -194,15 +194,15 @@ describe('remark-emoji', function() {
             }
         });
 
-        it('should not break ::: (#23)', async function() {
+        it('should not break ::: (#23)', async function () {
             const input = '::: danger Title\n\nbla bla bla\n\n:::\n';
             const result = await emoticon.process(input);
             assert.equal(String(result), input);
         });
     });
 
-    describe('accessibility support', function() {
-        it('wraps emoji with span', async function() {
+    describe('accessibility support', function () {
+        it('wraps emoji with span', async function () {
             const tests = {
                 ':dog:': '<p><span role="img" aria-label="dog emoji">🐶</span></p>\n',
                 ':dog: :cat:':
