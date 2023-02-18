@@ -1,5 +1,7 @@
 name: CI
 on: [push, pull_request]
+env:
+  TERM: xterm
 
 jobs:
   test:
@@ -14,6 +16,8 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
           cache: npm
+      - run: npm install -g npm
+        if: ${{ matrix.node == '14' }}
       - run: npm ci
       - run: npm test
   lint:
