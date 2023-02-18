@@ -21,10 +21,11 @@ import {remark} from 'remark';
 import emoji from 'remark-emoji';
 
 const doc = 'Emojis in this text will be replaced: :dog: :+1:';
-remark().use(emoji).process(doc).then(file => {
-    console.log(String(file));
-    // => Emojis in this text will be replaced: 🐶 👍
-});
+const processor = remark().use(emoji);
+const file = await processor.process(doc);
+
+console.log(String(file));
+// => Emojis in this text will be replaced: 🐶 👍
 ```
 
 Note that this package is [ESM only][esm-only] from v3.0.0 since remark packages migrated to ESM.
@@ -47,14 +48,17 @@ import emoji from 'remark-emoji';
 
 // Allow using `role` attribute in transformed HTML document
 const schema = structuredClone(defaultSchema);
-schema.attributes['*'].push('role');
+if ('span' in schema.attributes) {
+    schema.attributes.span.push('role');
+} else {
+    schema.attributes.span = ['role'];
+}
 
-const compiler = remark()
+const processor = remark()
     .use(emoji, { accessible: true })
     .use(toHtml, { sanitize: schema });
-compiler.process('Hello :dog:!').then(file => {
-    console.log(String(file));
-});
+const file = await processor.process('Hello :dog:!');
+console.log(String(file));
 ```
 
 yields
