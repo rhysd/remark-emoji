@@ -10,11 +10,11 @@
   "scripts": {
     "eslint": "eslint .",
     "prettier": "prettier -c '**/*.js' '**/*.ts'",
-    "lint": "npm-run-all -p eslint prettier",
-    "test-types": "dtslint types",
+    "lint": "concurrently -c auto npm:eslint npm:prettier",
+    "dtslint": "dtslint types",
     "mocha": "mocha index_test.js",
     "format": "prettier -w '**/*.js' '**/*.ts'",
-    "test": "npm-run-all -p mocha test-types"
+    "test": "concurrently -c auto npm:mocha npm:dtslint"
   },
   "repository": {
     "type": "git",
@@ -38,6 +38,7 @@
   },
   "homepage": "https://github.com/rhysd/remark-emoji#readme",
   "devDependencies": {
+    "concurrently": "^7.6.0",
     "dtslint": "^4.2.1",
     "eslint": "^8.32.0",
     "eslint-config-prettier": "^8.6.0",
@@ -45,7 +46,6 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-security": "^1.7.1",
     "mocha": "^10.2.0",
-    "npm-run-all": "^4.1.5",
     "prettier": "^2.8.3",
     "remark": "^14.0.2",
     "remark-autolink-headings": "^7.0.1",
