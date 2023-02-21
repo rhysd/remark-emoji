@@ -1,8 +1,8 @@
-// TypeScript Version: 4.3
+// TypeScript Version: 4.8
 
 import { Plugin } from 'unified';
 
-interface RemarkEmojiOptions {
+export interface RemarkEmojiOptions {
     /**
      * Makes converted emoji and emoticon texts accessible by wrapping them with
      * `span` element setting `role` and `aria-label` attributes.

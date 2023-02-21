@@ -1,5 +1,5 @@
 import { unified } from 'unified';
-import emoji from 'remark-emoji';
+import emoji, { type RemarkEmojiOptions } from 'remark-emoji';
 
 unified().use(emoji);
 unified().use(emoji, {});
@@ -15,3 +15,8 @@ unified().use(emoji, { emoticon: 1 }); // $ExpectError
 
 unified().use(emoji, { accessible: true });
 unified().use(emoji, { accessible: false });
+
+const opts: RemarkEmojiOptions = {};
+unified().use(emoji, opts);
+
+const invalidOpts: RemarkEmojiOptions = { accessible: 'true' }; // $ExpectError
