@@ -43,7 +43,7 @@ export default function plugin(options) {
         const iconPart = emoticon.find(e => e.emoticons.includes(match.slice(0, -1))); // second search pattern
         const icon = iconFull || iconPart;
         if (!icon) {
-            return match;
+            return false;
         }
         const trimmedChar = !iconFull && iconPart ? match.slice(-1) : '';
         const addPad = pad ? ' ' : '';
@@ -77,7 +77,7 @@ export default function plugin(options) {
         }
 
         if (got === match) {
-            return match;
+            return false;
         }
 
         if (pad) {
