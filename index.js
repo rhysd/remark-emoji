@@ -37,7 +37,7 @@ export default function plugin(options) {
         };
     }
 
-    function getEmoticon(match) {
+    function replaceEmoticon(match) {
         // find emoji by shortcode - full match or with-out last char as it could be from text e.g. :-),
         const iconFull = emoticon.find(e => e.emoticons.includes(match)); // full match
         const iconPart = emoticon.find(e => e.emoticons.includes(match.slice(0, -1))); // second search pattern
@@ -54,7 +54,7 @@ export default function plugin(options) {
         return replaced;
     }
 
-    function getEmoji(match) {
+    function replaceEmoji(match) {
         let got = emoji.get(match);
 
         // Workaround for #19. :man-*: and :woman-*: are now :*_man: and :*_woman: on GitHub. node-emoji
@@ -92,12 +92,13 @@ export default function plugin(options) {
         return got;
     }
 
+    const replacers = [[RE_EMOJI, replaceEmoji]];
+    if (emoticonEnable) {
+        replacers.push([RE_SHORT, replaceEmoticon]);
+    }
+
     function transformer(tree) {
-        const handlers = [[RE_EMOJI, getEmoji]];
-        if (emoticonEnable) {
-            handlers.push([RE_SHORT, getEmoticon]);
-        }
-        findAndReplace(tree, handlers);
+        findAndReplace(tree, replacers);
     }
 
     return transformer;
