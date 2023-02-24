@@ -12,7 +12,7 @@
     "prettier": "prettier -c '**/*.js' '**/*.ts'",
     "lint": "concurrently -c auto npm:eslint npm:prettier",
     "dtslint": "dtslint types",
-    "mocha": "mocha --color index_test.js",
+    "mocha": "mocha --color test.js",
     "format": "prettier -w '**/*.js' '**/*.ts'",
     "test": "concurrently -c auto npm:mocha npm:dtslint"
   },

@@ -24,7 +24,7 @@ describe('remark-emoji', function () {
 
             for (const input of Object.keys(tests)) {
                 const result = await compiler.process(input);
-                assert.equal(String(result), tests[input]);
+                assert.equal(String(result), tests[input], `input: ${JSON.stringify(input)}`);
             }
         });
 
@@ -37,7 +37,7 @@ describe('remark-emoji', function () {
 
             for (const input of Object.keys(tests)) {
                 const result = await compiler.process(input);
-                assert.equal(String(result), tests[input]);
+                assert.equal(String(result), tests[input], `input: ${JSON.stringify(input)}`);
             }
         });
 
@@ -51,11 +51,11 @@ describe('remark-emoji', function () {
 
             for (const input of Object.keys(tests)) {
                 const result = await compiler.process(input);
-                assert.equal(String(result), tests[input]);
+                assert.equal(String(result), tests[input], `input: ${JSON.stringify(input)}`);
             }
         });
 
-        it('can handle an emoji including 2 underscores', async function () {
+        it('handles an emoji including 2 underscores', async function () {
             const result = await compiler.process(':heavy_check_mark:');
             assert.equal(String(result), '✔️\n');
         });
@@ -72,11 +72,11 @@ describe('remark-emoji', function () {
 
             for (const input of Object.keys(tests)) {
                 const result = await padded.process(input);
-                assert.equal(String(result), tests[input]);
+                assert.equal(String(result), tests[input], `input: ${JSON.stringify(input)}`);
             }
         });
 
-        it('can handle emoji that use dashes to separate words instead of underscores', async function () {
+        it('handles emoji that use dashes to separate words instead of underscores', async function () {
             const tests = {
                 'The Antarctic flag is represented by :flag-aq:': 'The Antarctic flag is represented by 🇦🇶\n',
                 ':man-woman-girl-boy:': '👨‍👩‍👧‍👦\n',
@@ -84,7 +84,7 @@ describe('remark-emoji', function () {
 
             for (const input of Object.keys(tests)) {
                 const result = await compiler.process(input);
-                assert.equal(String(result), tests[input]);
+                assert.equal(String(result), tests[input], `input: ${JSON.stringify(input)}`);
             }
         });
 
@@ -97,7 +97,7 @@ describe('remark-emoji', function () {
 
             for (const input of Object.keys(tests)) {
                 const result = await compiler.process(input);
-                assert.equal(String(result), tests[input]);
+                assert.equal(String(result), tests[input], `input: ${JSON.stringify(input)}`);
             }
         });
     });
@@ -113,7 +113,7 @@ describe('remark-emoji', function () {
 
             for (const input of Object.keys(tests)) {
                 const result = await emoticon.process(input);
-                assert.equal(String(result), tests[input]);
+                assert.equal(String(result), tests[input], `input: ${JSON.stringify(input)}`);
             }
         });
 
@@ -126,7 +126,7 @@ describe('remark-emoji', function () {
 
             for (const input of Object.keys(tests)) {
                 const result = await emoticon.process(input);
-                assert.equal(String(result), tests[input]);
+                assert.equal(String(result), tests[input], `input: ${JSON.stringify(input)}`);
             }
         });
 
@@ -140,11 +140,11 @@ describe('remark-emoji', function () {
 
             for (const input of Object.keys(tests)) {
                 const result = await emoticon.process(input);
-                assert.equal(String(result), tests[input]);
+                assert.equal(String(result), tests[input], `input: ${JSON.stringify(input)}`);
             }
         });
 
-        it('can handle an emoji including 2 underscores', async function () {
+        it('handles an emoji including 2 underscores', async function () {
             const result = await emoticon.process(':heavy_check_mark:');
             assert.equal(String(result), '✔️\n');
         });
@@ -161,11 +161,11 @@ describe('remark-emoji', function () {
 
             for (const input of Object.keys(tests)) {
                 const result = await padAndEmoticon.process(input);
-                assert.equal(String(result), tests[input]);
+                assert.equal(String(result), tests[input], `input: ${JSON.stringify(input)}`);
             }
         });
 
-        it('can handle emoji that use dashes to separate words instead of underscores', async function () {
+        it('handles emoji that use dashes to separate words instead of underscores', async function () {
             const tests = {
                 'The Antarctic flag is represented by :flag-aq:': 'The Antarctic flag is represented by 🇦🇶\n',
                 ':man-woman-girl-boy:': '👨‍👩‍👧‍👦\n',
@@ -173,11 +173,11 @@ describe('remark-emoji', function () {
 
             for (const input of Object.keys(tests)) {
                 const result = await emoticon.process(input);
-                assert.equal(String(result), tests[input]);
+                assert.equal(String(result), tests[input], `input: ${JSON.stringify(input)}`);
             }
         });
 
-        it('can handle emoji shortcodes (emoticon)', async function () {
+        it('handles emoji shortcodes (emoticon)', async function () {
             const tests = {
                 ':p': '😛\n',
                 ':-)': '😃\n',
@@ -190,7 +190,7 @@ describe('remark-emoji', function () {
 
             for (const input of Object.keys(tests)) {
                 const result = await emoticon.process(input);
-                assert.equal(String(result), tests[input]);
+                assert.equal(String(result), tests[input], `input: ${JSON.stringify(input)}`);
             }
         });
 
@@ -218,7 +218,7 @@ describe('remark-emoji', function () {
 
             for (const input of Object.keys(tests)) {
                 const result = await ariaHtml.process(input);
-                assert.equal(String(result), tests[input]);
+                assert.equal(String(result), tests[input], `input: ${JSON.stringify(input)}`);
             }
         });
     });
