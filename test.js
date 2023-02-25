@@ -20,6 +20,7 @@ describe('remark-emoji', function () {
                 ':dog: is not :cat:': '🐶 is not 🐱\n',
                 'Please vote with :+1: or :-1:': 'Please vote with 👍 or 👎\n',
                 ':triumph:': '😤\n',
+                ':stuck_out_tongue_winking_eye:': '😜\n',
             };
 
             for (const input of Object.keys(tests)) {
@@ -214,6 +215,8 @@ describe('remark-emoji', function () {
                     '<p>Hello, <span role="img" aria-label="man walking emoji">\uD83D\uDEB6\u200D\u2642\uFE0F</span></p>\n',
                 ':+1:': '<p><span role="img" aria-label="+1 emoji">👍</span></p>\n',
                 ':-1:': '<p><span role="img" aria-label="-1 emoji">👎</span></p>\n',
+                ':stuck_out_tongue_winking_eye:':
+                    '<p><span role="img" aria-label="stuck out tongue winking eye emoji">😜</span></p>\n',
             };
 
             for (const input of Object.keys(tests)) {
