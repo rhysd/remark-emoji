@@ -31,7 +31,7 @@
           "extends": ["plugin:security/recommended"]
       },
       {
-          "files": ["index_test.js"],
+          "files": ["test.js"],
           "plugins": ["mocha"],
           "extends": ["plugin:mocha/recommended"]
       }
