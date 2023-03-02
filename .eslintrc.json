@@ -11,10 +11,10 @@
     "node": true,
     "mocha": true
   },
-  "plugins": ["node"],
+  "plugins": ["n"],
   "extends": [
     "eslint:recommended",
-    "plugin:node/recommended",
+    "plugin:n/recommended",
     "prettier"
   ],
   "parserOptions": {
@@ -27,13 +27,23 @@
   "overrides": [
       {
           "files": ["index.js"],
-          "plugins": ["security"],
-          "extends": ["plugin:security/recommended"]
+          "plugins": ["n", "security"],
+          "extends": [
+            "eslint:recommended",
+            "plugin:n/recommended",
+            "plugin:security/recommended",
+            "prettier"
+          ]
       },
       {
           "files": ["test.js"],
-          "plugins": ["mocha"],
-          "extends": ["plugin:mocha/recommended"]
+          "plugins": ["n", "mocha"],
+          "extends": [
+            "eslint:recommended",
+            "plugin:n/recommended",
+            "plugin:mocha/recommended",
+            "prettier"
+          ]
       }
   ]
 }
