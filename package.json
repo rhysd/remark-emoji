@@ -17,7 +17,7 @@
   "scripts": {
     "eslint": "eslint .",
     "prettier": "prettier -c '**/*.js' '**/*.ts'",
-    "lint": "concurrently -c auto npm:eslint npm:prettier",
+    "lint": "concurrently -c auto npm:eslint npm:prettier npm:dtslint",
     "dtslint": "dtslint types",
     "mocha": "mocha --color test.js",
     "format": "prettier -w '**/*.js' '**/*.ts'",
