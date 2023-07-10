@@ -4,7 +4,6 @@ import { findAndReplace } from 'mdast-util-find-and-replace';
 
 const RE_EMOJI = /:\+1:|:-1:|:[\w-]+:/g;
 const RE_SHORT = /[$@|*'",;.=:\-)([\]\\/<>038BOopPsSdDxXzZ]{2,5}/g;
-const RE_UNDERSTORE = /_/g;
 const RE_PUNCT = /(?:_|-(?!1))/g;
 
 const DEFAULT_SETTINGS = {
