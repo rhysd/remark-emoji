@@ -79,8 +79,7 @@ describe('remark-emoji', function () {
 
         it('handles emoji that use dashes to separate words instead of underscores', async function () {
             const tests = {
-                'The Antarctic flag is represented by :flag-aq:': 'The Antarctic flag is represented by 🇦🇶\n',
-                ':man-woman-girl-boy:': '👨‍👩‍👧‍👦\n',
+                'T-Rex emoji is :t-rex:': 'T-Rex emoji is 🦖\n',
             };
 
             for (const input of Object.keys(tests)) {
@@ -168,8 +167,7 @@ describe('remark-emoji', function () {
 
         it('handles emoji that use dashes to separate words instead of underscores', async function () {
             const tests = {
-                'The Antarctic flag is represented by :flag-aq:': 'The Antarctic flag is represented by 🇦🇶\n',
-                ':man-woman-girl-boy:': '👨‍👩‍👧‍👦\n',
+                'T-Rex emoji is :t-rex:': 'T-Rex emoji is 🦖\n',
             };
 
             for (const input of Object.keys(tests)) {
