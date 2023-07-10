@@ -87,19 +87,6 @@ describe('remark-emoji', function () {
                 assert.equal(String(result), tests[input], `input: ${JSON.stringify(input)}`);
             }
         });
-
-        it('handles man-*/woman-* with *_man/*_woman (#19)', async function () {
-            const tests = {
-                'Hello, :walking_man:': 'Hello, \uD83D\uDEB6\u200D\u2642\uFE0F\n',
-                'Hello, :walking_woman:': 'Hello, \uD83D\uDEB6\u200D\u2640\uFE0F\n',
-                'Hello, :mountain_biking_woman:': 'Hello, \uD83D\uDEB5\u200D\u2640\uFE0F\n',
-            };
-
-            for (const input of Object.keys(tests)) {
-                const result = await compiler.process(input);
-                assert.equal(String(result), tests[input], `input: ${JSON.stringify(input)}`);
-            }
-        });
     });
 
     describe('emoticon support', function () {
@@ -207,10 +194,6 @@ describe('remark-emoji', function () {
                 ':dog: :cat:':
                     '<p><span role="img" aria-label="dog emoji">🐶</span> <span role="img" aria-label="cat emoji">🐱</span></p>\n',
                 ':-)': '<p><span role="img" aria-label="smiley emoticon">😃</span></p>\n',
-                'Hello, :walking_man:':
-                    '<p>Hello, <span role="img" aria-label="walking man emoji">\uD83D\uDEB6\u200D\u2642\uFE0F</span></p>\n',
-                'Hello, :man-walking:':
-                    '<p>Hello, <span role="img" aria-label="man walking emoji">\uD83D\uDEB6\u200D\u2642\uFE0F</span></p>\n',
                 ':+1:': '<p><span role="img" aria-label="+1 emoji">👍</span></p>\n',
                 ':-1:': '<p><span role="img" aria-label="-1 emoji">👎</span></p>\n',
                 ':stuck_out_tongue_winking_eye:':
