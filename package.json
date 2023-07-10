@@ -45,26 +45,26 @@
   },
   "homepage": "https://github.com/rhysd/remark-emoji#readme",
   "devDependencies": {
-    "concurrently": "^7.6.0",
+    "concurrently": "^8.2.0",
     "dtslint": "^4.2.1",
-    "eslint": "^8.34.0",
-    "eslint-config-prettier": "^8.6.0",
+    "eslint": "^8.44.0",
+    "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-mocha": "^10.1.0",
-    "eslint-plugin-n": "^15.6.1",
+    "eslint-plugin-n": "^16.0.1",
     "eslint-plugin-security": "^1.7.1",
     "mocha": "^10.2.0",
-    "prettier": "^2.8.4",
-    "remark": "^14.0.2",
+    "prettier": "^3.0.0",
+    "remark": "^14.0.3",
     "remark-autolink-headings": "^7.0.1",
     "remark-github": "^11.2.4",
     "remark-html": "^15.0.2",
     "remark-slug": "^7.0.1",
-    "typescript": "^4.9.5",
+    "typescript": "^5.1.6",
     "unified": "^10.1.2"
   },
   "dependencies": {
     "emoticon": "^4.0.1",
-    "mdast-util-find-and-replace": "^2.2.2",
-    "node-emoji": "^1.11.0"
+    "mdast-util-find-and-replace": "^3.0.0",
+    "node-emoji": "^2.1.0"
   }
 }
