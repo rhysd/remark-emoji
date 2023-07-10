@@ -1,4 +1,4 @@
-import emoji from 'node-emoji';
+import { get as getEmoji } from 'node-emoji';
 import { emoticon } from 'emoticon';
 import { findAndReplace } from 'mdast-util-find-and-replace';
 
@@ -55,28 +55,9 @@ export default function plugin(options) {
     }
 
     function replaceEmoji(match) {
-        let got = emoji.get(match);
+        let got = getEmoji(match);
 
-        // Workaround for #19. :man-*: and :woman-*: are now :*_man: and :*_woman: on GitHub. node-emoji
-        // does not support the new short codes. Convert new to old.
-        // TODO: Remove this workaround when this PR is merged and shipped: https://github.com/omnidan/node-emoji/pull/112
-        if (match.endsWith('_man:') && got === match) {
-            // :foo_bar_man: -> man-foo-bar
-            const old = 'man-' + match.slice(1, -5).replace(RE_UNDERSTORE, '-');
-            const s = emoji.get(old);
-            if (s !== old) {
-                got = s;
-            }
-        } else if (match.endsWith('_woman:') && got === match) {
-            // :foo_bar_woman: -> woman-foo-bar
-            const old = 'woman-' + match.slice(1, -7).replace(RE_UNDERSTORE, '-');
-            const s = emoji.get(old);
-            if (s !== old) {
-                got = s;
-            }
-        }
-
-        if (got === match) {
+        if (typeof got === 'undefined') {
             return false;
         }
 
