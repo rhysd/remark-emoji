@@ -3,8 +3,8 @@ remark-emoji
 [![CI][ci-badge]][ci]
 [![npm][npm-badge]][npm]
 
-This is a [remark](https://github.com/remarkjs/remark) plugin to replace `:emoji:` to real UTF-8 emojis in text.
-Accessibility support and Emoticon support are optionally available.
+[remark-emoji][npm] is a [remark](https://github.com/remarkjs/remark) plugin to replace `:emoji:` to real UTF-8
+emojis in text. Accessibility support and Emoticon support are optionally available.
 
 ## Demo
 
@@ -79,6 +79,15 @@ Default value is `false`.
 
 Setting to `true` means that [emoticon](https://www.npmjs.com/package/emoticon) shortcodes are supported (e.g. :-)
 will be replaced by 😃). Default value is `false`.
+
+## TypeScript support
+
+remark-emoji package contains [TypeScript](https://www.typescriptlang.org/) type definitions. The package is ready
+for use with TypeScript.
+
+Note that the legacy `node` (or `node10`) resolution at [`moduleResolution`](https://www.typescriptlang.org/tsconfig#moduleResolution)
+is not available since it enforces CommonJS module resolution and this package is ESM only. Please use `node16`,
+`bundler`, or `nodenext` to enable ESM module resolution.
 
 ## License
 
