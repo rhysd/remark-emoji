@@ -1,5 +1,6 @@
 {
   "module": "es2020",
+  "moduleResolution": "nodenext",
   "compilerOptions": {
     "lib": ["es2015"],
     "strict": true,

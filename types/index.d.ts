@@ -26,5 +26,5 @@ export interface RemarkEmojiOptions {
     emoticon?: boolean;
 }
 
-declare const plugin: Plugin<[RemarkEmojiOptions?]>;
+declare const plugin: Plugin<[(RemarkEmojiOptions | null | undefined)?]>;
 export default plugin;

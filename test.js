@@ -45,7 +45,8 @@ describe('remark-emoji', function () {
         it('replaces in link text', async function () {
             const tests = {
                 'In inline code, `:dog: and :-) is not replaced`': 'In inline code, `:dog: and :-) is not replaced`\n',
-                'In code, \n```\n:dog: and :-) is not replaced\n```': 'In code,\n\n    :dog: and :-) is not replaced\n',
+                'In code, \n```\n:dog: and :-) is not replaced\n```':
+                    'In code,\n\n```\n:dog: and :-) is not replaced\n```\n',
                 '[here :dog: and :cat: and :-) pictures!](https://example.com)':
                     '[here 🐶 and 🐱 and :-) pictures!](https://example.com)\n',
             };
@@ -120,7 +121,8 @@ describe('remark-emoji', function () {
         it('replaces in link text', async function () {
             const tests = {
                 'In inline code, `:dog: and :-) is not replaced`': 'In inline code, `:dog: and :-) is not replaced`\n',
-                'In code, \n```\n:dog: and :-) is not replaced\n```': 'In code,\n\n    :dog: and :-) is not replaced\n',
+                'In code, \n```\n:dog: and :-) is not replaced\n```':
+                    'In code,\n\n```\n:dog: and :-) is not replaced\n```\n',
                 '[here :dog: and :cat: and :-) pictures!](https://example.com)':
                     '[here 🐶 and 🐱 and 😃 pictures!](https://example.com)\n',
             };
