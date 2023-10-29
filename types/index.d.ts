@@ -1,6 +1,5 @@
-// TypeScript Version: 4.8
-
 import type { Plugin } from 'unified';
+import type { Root } from 'mdast';
 
 export interface RemarkEmojiOptions {
     /**
@@ -26,5 +25,5 @@ export interface RemarkEmojiOptions {
     emoticon?: boolean;
 }
 
-declare const plugin: Plugin<[(RemarkEmojiOptions | null | undefined)?]>;
+declare const plugin: Plugin<[(RemarkEmojiOptions | null | undefined)?], Root>;
 export default plugin;
