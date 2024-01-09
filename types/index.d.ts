@@ -23,6 +23,18 @@ export interface RemarkEmojiOptions {
      * @defaultValue false
      */
     emoticon?: boolean;
+    /**
+     * Custom emojis. For example, to render `:parrot:` as a gif emoji:
+     *
+     * ```js
+     * remark().use(emoji, {
+     *   customEmojis: {
+     *     parrot: '<img src="https://cultofthepartyparrot.com/parrots/parrot.gif" style="width:auto;height:1em;">'
+     *   }
+     * });
+     * ```
+     */
+    customEmojis?: Record<string, string>;
 }
 
 declare const plugin: Plugin<[(RemarkEmojiOptions | null | undefined)?], Root>;
