@@ -17,11 +17,11 @@
   "scripts": {
     "eslint": "eslint .",
     "prettier": "prettier -c '**/*.js' '**/*.ts'",
-    "lint": "concurrently -c auto npm:eslint npm:prettier npm:tsd",
+    "lint": "concurrently -c auto npm:eslint npm:prettier",
     "tsd": "tsd",
     "mocha": "mocha --color test.js",
     "format": "prettier -w '**/*.js' '**/*.ts'",
-    "test": "mocha"
+    "test": "concurrently -c auto npm:mocha npm:tsd"
   },
   "repository": {
     "type": "git",
