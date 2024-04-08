@@ -17,7 +17,6 @@ export default function plugin(options) {
     const pad = !!settings.padSpaceAfter;
     const emoticonEnable = !!settings.emoticon;
     const accessible = !!settings.accessible;
-    const customEmojis = settings.customEmojis || {};
 
     function aria(text, label) {
         // Creating HTML node in Markdown node is undocumented.
@@ -55,7 +54,7 @@ export default function plugin(options) {
     }
 
     function replaceEmoji(match) {
-        let got = customEmojis[match] || getEmoji(match);
+        let got = getEmoji(match);
 
         if (typeof got === 'undefined') {
             return false;
