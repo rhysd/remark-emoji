@@ -80,6 +80,21 @@ Default value is `false`.
 Setting to `true` means that [emoticon](https://www.npmjs.com/package/emoticon) shortcodes are supported (e.g. :-)
 will be replaced by 😃). Default value is `false`.
 
+### `options.customEmojis`
+
+If you want to render a ![Parrot](https://cultofthepartyparrot.com/parrots/parrot.gif) with `:parrot:`, use `customEmojis` option:
+
+```javascript
+import {remark} from 'remark';
+import emoji from 'remark-emoji';
+
+remark().use(emoji, {
+    customEmojis: {
+        parrot: '<img src="https://cultofthepartyparrot.com/parrots/parrot.gif" style="width:auto;height:1em;">'
+    }
+});
+```
+
 ## TypeScript support
 
 remark-emoji package contains [TypeScript](https://www.typescriptlang.org/) type definitions. The package is ready
