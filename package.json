@@ -9,7 +9,7 @@
   "exports": {
     ".": {
       "import": {
-        "types": "./types/index.d.ts",
+        "types": "./index.d.ts",
         "default": "./index.js"
       }
     }
@@ -18,10 +18,10 @@
     "eslint": "eslint .",
     "prettier": "prettier -c '**/*.js' '**/*.ts'",
     "lint": "concurrently -c auto npm:eslint npm:prettier",
-    "tsd": "tsd",
-    "mocha": "mocha --color test.js",
+    "build": "tsc -p . -d",
+    "watch": "tsc -w -p .",
     "format": "prettier -w '**/*.js' '**/*.ts'",
-    "test": "concurrently -c auto npm:mocha npm:tsd"
+    "test": "mocha --color test.js"
   },
   "repository": {
     "type": "git",
@@ -33,7 +33,7 @@
     "remark",
     "plugin"
   ],
-  "types": "types/index.d.ts",
+  "types": "index.d.ts",
   "files": [
     "types/index.d.ts",
     "index.js"
@@ -51,15 +51,14 @@
     "eslint-plugin-mocha": "^10.2.0",
     "eslint-plugin-n": "^16.2.0",
     "eslint-plugin-security": "^1.7.1",
-    "mocha": "^10.2.0",
-    "prettier": "^3.0.3",
+    "mocha": "^10.4.0",
+    "prettier": "^3.2.5",
     "remark": "^15.0.1",
     "remark-autolink-headings": "^7.0.1",
     "remark-github": "^12.0.0",
     "remark-html": "^16.0.1",
     "remark-slug": "^7.0.1",
-    "tsd": "^0.31.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.4.5"
   },
   "dependencies": {
     "@types/mdast": "^4.0.2",
