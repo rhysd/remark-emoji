@@ -35,8 +35,8 @@ Note that this package is [ESM only][esm-only] from v3.0.0 since remark packages
 ### `options.accessible`
 
 Setting to `true` makes the converted emoji text accessible with `role` and `aria-label` attributes. Each emoji
-text is wrapped with `<span>` element. Note that `role` attribute is not allowed by default. Please add it to
-the sanitization schema used by remark's HTML transformer.
+text is wrapped with `<span>` element. The `role` and `aria-label` attribute are not allowed by default. Please
+add them to the sanitization schema used by remark's HTML transformer.
 
 For example,
 
@@ -46,12 +46,12 @@ import toHtml from 'remark-html';
 import {defaultSchema} from 'hast-util-sanitize'
 import emoji from 'remark-emoji';
 
-// Allow using `role` attribute in transformed HTML document
+// Allow using `role` and `aria-label` attributes in transformed HTML document
 const schema = structuredClone(defaultSchema);
 if ('span' in schema.attributes) {
-    schema.attributes.span.push('role');
+    schema.attributes.span.push('role', 'ariaLabel');
 } else {
-    schema.attributes.span = ['role'];
+    schema.attributes.span = ['role', 'ariaLabel'];
 }
 
 const processor = remark()
