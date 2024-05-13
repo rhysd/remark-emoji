@@ -9,10 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        # node v22 cannot be added to this list until this issue is solved otherwise it causes SEGV
+        # https://github.com/nodejs/node/issues/52797
         node: ['16', '18', '20']
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
           cache: npm
@@ -22,10 +24,10 @@ jobs:
     name: Linting
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: npm
       - run: npm ci
       - run: npm run lint
