@@ -1,23 +1,24 @@
 import assert from 'assert';
 import { remark } from 'remark';
+import gfm from 'remark-gfm';
 import github from 'remark-github';
-import headings from 'remark-autolink-headings';
-import slug from 'remark-slug';
+import rehype from 'remark-rehype';
+import headings from 'rehype-autolink-headings';
+import slug from 'rehype-slug';
 import remarkHtml from 'remark-html';
 import emoji from './index.js';
+import rehypeStringify from 'rehype-stringify';
 
-// @ts-ignore
-const compiler = remark().use(github).use(headings).use(slug).use(emoji);
-// @ts-ignore
-const padded = remark().use(github).use(headings).use(slug).use(emoji, { padSpaceAfter: true });
-// @ts-ignore
-const emoticon = remark().use(github).use(headings).use(slug).use(emoji, { emoticon: true });
-// @ts-ignore
-const padAndEmoticon = remark().use(github).use(headings).use(slug).use(emoji, { padSpaceAfter: true, emoticon: true });
+const compiler = remark().use(emoji);
+const padded = remark().use(emoji, { padSpaceAfter: true });
+const emoticon = remark().use(emoji, { emoticon: true });
+const padAndEmoticon = remark().use(emoji, { padSpaceAfter: true, emoticon: true });
 const ariaHtml = remark().use(emoji, { emoticon: true, accessible: true }).use(remarkHtml, { sanitize: false });
+const githubFlavor = remark().use(gfm).use(github).use(emoji);
+const toRehype = remark().use(emoji).use(rehype).use(slug).use(headings).use(rehypeStringify);
 
 describe('remark-emoji', function () {
-    describe('default compiler', function () {
+    describe('minimal compiler', function () {
         it('replaces emojis in text', async function () {
             const tests: Record<string, string> = {
                 'This is :dog:': 'This is 🐶\n',
@@ -83,14 +84,33 @@ describe('remark-emoji', function () {
         });
 
         it('handles emoji that use dashes to separate words instead of underscores', async function () {
-            const tests: Record<string, string> = {
-                'T-Rex emoji is :t-rex:': 'T-Rex emoji is 🦖\n',
-            };
+            const result = await compiler.process('T-Rex emoji is :t-rex:');
+            assert.equal(String(result), 'T-Rex emoji is 🦖\n');
+        });
+    });
 
-            for (const input of Object.keys(tests)) {
-                const result = await compiler.process(input);
-                assert.equal(String(result), tests[input], `input: ${JSON.stringify(input)}`);
-            }
+    describe('transforms markdown AST to rehype with other remark and rehype plugins', function () {
+        it('replaces emois in transformed HTML text', async function () {
+            // `id="hello-world"` is inserted by rehype-slug
+            // `<a aria-hidden="true" tabindex="-1" href="#hello-world">...` is inserted by rehype-autolink-headings
+            const input = '# Hello world\nWoo :dog: is not :cat:.';
+            const expected =
+                '<h1 id="hello-world"><a aria-hidden="true" tabindex="-1" href="#hello-world"><span class="icon icon-link"></span></a>Hello world</h1>\n<p>Woo 🐶 is not 🐱.</p>';
+
+            const result = await toRehype.process(input);
+            assert.equal(String(result), expected, `input: ${JSON.stringify(input)}`);
+        });
+    });
+
+    describe('transforms markdown AST with other remark plugins', function () {
+        it('replaces emois in text with GitHub-Flavored Markdown extensions', async function () {
+            // `- [x]` task list is handled by remark-gfm
+            // `@rhysd` auto link is handled by remark-github
+            const input = '- [x] @rhysd is a :dog:.';
+            const expected = '* [x] [**@rhysd**](https://github.com/rhysd) is a 🐶.\n';
+
+            const result = await githubFlavor.process(input);
+            assert.equal(String(result), expected, `input: ${JSON.stringify(input)}`);
         });
     });
 
@@ -159,14 +179,8 @@ describe('remark-emoji', function () {
         });
 
         it('handles emoji that use dashes to separate words instead of underscores', async function () {
-            const tests: Record<string, string> = {
-                'T-Rex emoji is :t-rex:': 'T-Rex emoji is 🦖\n',
-            };
-
-            for (const input of Object.keys(tests)) {
-                const result = await emoticon.process(input);
-                assert.equal(String(result), tests[input], `input: ${JSON.stringify(input)}`);
-            }
+            const result = await emoticon.process('T-Rex emoji is :t-rex:');
+            assert.equal(String(result), 'T-Rex emoji is 🦖\n');
         });
 
         it('handles emoji shortcodes (emoticon)', async function () {
