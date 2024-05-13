@@ -6,16 +6,20 @@ import slug from 'remark-slug';
 import remarkHtml from 'remark-html';
 import emoji from './index.js';
 
+// @ts-ignore
 const compiler = remark().use(github).use(headings).use(slug).use(emoji);
+// @ts-ignore
 const padded = remark().use(github).use(headings).use(slug).use(emoji, { padSpaceAfter: true });
+// @ts-ignore
 const emoticon = remark().use(github).use(headings).use(slug).use(emoji, { emoticon: true });
+// @ts-ignore
 const padAndEmoticon = remark().use(github).use(headings).use(slug).use(emoji, { padSpaceAfter: true, emoticon: true });
 const ariaHtml = remark().use(emoji, { emoticon: true, accessible: true }).use(remarkHtml, { sanitize: false });
 
 describe('remark-emoji', function () {
     describe('default compiler', function () {
         it('replaces emojis in text', async function () {
-            const tests = {
+            const tests: Record<string, string> = {
                 'This is :dog:': 'This is 🐶\n',
                 ':dog: is not :cat:': '🐶 is not 🐱\n',
                 'Please vote with :+1: or :-1:': 'Please vote with 👍 or 👎\n',
@@ -30,7 +34,7 @@ describe('remark-emoji', function () {
         });
 
         it('does not replace emoji-like but not-a-emoji stuffs', async function () {
-            const tests = {
+            const tests: Record<string, string> = {
                 'This text does not include emoji.': 'This text does not include emoji.\n',
                 ':++: or :foo: or :cat': ':++: or :foo: or :cat\n',
                 '::': '::\n',
@@ -43,7 +47,7 @@ describe('remark-emoji', function () {
         });
 
         it('replaces in link text', async function () {
-            const tests = {
+            const tests: Record<string, string> = {
                 'In inline code, `:dog: and :-) is not replaced`': 'In inline code, `:dog: and :-) is not replaced`\n',
                 'In code, \n```\n:dog: and :-) is not replaced\n```':
                     'In code,\n\n```\n:dog: and :-) is not replaced\n```\n',
@@ -63,7 +67,7 @@ describe('remark-emoji', function () {
         });
 
         it('adds an white space after emoji when padSpaceAfter is set to true', async function () {
-            const tests = {
+            const tests: Record<string, string> = {
                 ':dog: is dog': '🐶  is dog\n',
                 'dog is :dog:': 'dog is 🐶&#x20;\n',
                 ':dog: is not :cat:': '🐶  is not 🐱&#x20;\n',
@@ -79,7 +83,7 @@ describe('remark-emoji', function () {
         });
 
         it('handles emoji that use dashes to separate words instead of underscores', async function () {
-            const tests = {
+            const tests: Record<string, string> = {
                 'T-Rex emoji is :t-rex:': 'T-Rex emoji is 🦖\n',
             };
 
@@ -92,7 +96,7 @@ describe('remark-emoji', function () {
 
     describe('emoticon support', function () {
         it('replaces emojis in text', async function () {
-            const tests = {
+            const tests: Record<string, string> = {
                 'This is :dog:': 'This is 🐶\n',
                 ':dog: is not :cat:': '🐶 is not 🐱\n',
                 'Please vote with :+1: or :-1:': 'Please vote with 👍 or 👎\n',
@@ -106,7 +110,7 @@ describe('remark-emoji', function () {
         });
 
         it('does not replace emoji-like but not-a-emoji stuffs', async function () {
-            const tests = {
+            const tests: Record<string, string> = {
                 'This text does not include emoji.': 'This text does not include emoji.\n',
                 ':++: or :foo: or :cat': ':++: or :foo: or :cat\n',
                 '::': '::\n',
@@ -119,7 +123,7 @@ describe('remark-emoji', function () {
         });
 
         it('replaces in link text', async function () {
-            const tests = {
+            const tests: Record<string, string> = {
                 'In inline code, `:dog: and :-) is not replaced`': 'In inline code, `:dog: and :-) is not replaced`\n',
                 'In code, \n```\n:dog: and :-) is not replaced\n```':
                     'In code,\n\n```\n:dog: and :-) is not replaced\n```\n',
@@ -139,7 +143,7 @@ describe('remark-emoji', function () {
         });
 
         it('adds an white space after emoji when padSpaceAfter is set to true', async function () {
-            const tests = {
+            const tests: Record<string, string> = {
                 ':dog: is dog': '🐶  is dog\n',
                 'dog is :dog:': 'dog is 🐶&#x20;\n',
                 ':dog: is not :cat:': '🐶  is not 🐱&#x20;\n',
@@ -155,7 +159,7 @@ describe('remark-emoji', function () {
         });
 
         it('handles emoji that use dashes to separate words instead of underscores', async function () {
-            const tests = {
+            const tests: Record<string, string> = {
                 'T-Rex emoji is :t-rex:': 'T-Rex emoji is 🦖\n',
             };
 
@@ -166,7 +170,7 @@ describe('remark-emoji', function () {
         });
 
         it('handles emoji shortcodes (emoticon)', async function () {
-            const tests = {
+            const tests: Record<string, string> = {
                 ':p': '😛\n',
                 ':-)': '😃\n',
                 'With-in some text :-p, also with some  :o spaces :-)!':
@@ -191,7 +195,7 @@ describe('remark-emoji', function () {
 
     describe('accessibility support', function () {
         it('wraps emoji with span', async function () {
-            const tests = {
+            const tests: Record<string, string> = {
                 ':dog:': '<p><span role="img" aria-label="dog emoji">🐶</span></p>\n',
                 ':dog: :cat:':
                     '<p><span role="img" aria-label="dog emoji">🐶</span> <span role="img" aria-label="cat emoji">🐱</span></p>\n',

@@ -18,10 +18,11 @@
     "eslint": "eslint .",
     "prettier": "prettier -c '**/*.js' '**/*.ts'",
     "lint": "concurrently -c auto npm:eslint npm:prettier",
-    "build": "tsc -p . -d",
+    "build": "tsc --pretty -p . -d",
     "watch": "tsc -w -p .",
     "format": "prettier -w '**/*.js' '**/*.ts'",
-    "test": "mocha --color test.js"
+    "mocha": "mocha --color test.js",
+    "test": "concurrently -m 1 -c auto npm:build npm:mocha"
   },
   "repository": {
     "type": "git",
@@ -45,6 +46,8 @@
   },
   "homepage": "https://github.com/rhysd/remark-emoji#readme",
   "devDependencies": {
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.12.11",
     "concurrently": "^8.2.2",
     "eslint": "^8.52.0",
     "eslint-config-prettier": "^9.0.0",
