@@ -15,12 +15,12 @@
     }
   },
   "scripts": {
-    "eslint": "eslint .",
-    "prettier": "prettier -c '**/*.js' '**/*.ts'",
+    "eslint": "eslint '*.ts' eslint.config.mjs",
+    "prettier": "prettier -c '*.ts'",
     "lint": "concurrently -c auto npm:eslint npm:prettier",
     "build": "tsc --pretty -p . -d",
     "watch": "tsc -w -p .",
-    "format": "prettier -w '**/*.js' '**/*.ts'",
+    "format": "prettier -w '*.ts'",
     "mocha": "mocha --color test.js",
     "test": "concurrently -m 1 -c auto npm:build npm:mocha"
   },
@@ -46,14 +46,17 @@
   },
   "homepage": "https://github.com/rhysd/remark-emoji#readme",
   "devDependencies": {
+    "@eslint/js": "^9.2.0",
+    "@types/eslint__js": "^8.42.3",
+    "@types/eslint-plugin-mocha": "^10.4.0",
     "@types/mocha": "^10.0.6",
     "@types/node": "^20.12.12",
     "concurrently": "^8.2.2",
     "eslint": "^8.52.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-mocha": "^10.2.0",
-    "eslint-plugin-n": "^16.2.0",
-    "eslint-plugin-security": "^1.7.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-mocha": "^10.4.3",
+    "eslint-plugin-n": "^17.7.0",
+    "eslint-plugin-security": "^3.0.0",
     "hast-util-sanitize": "^5.0.1",
     "mocha": "^10.4.0",
     "prettier": "^3.2.5",
@@ -65,7 +68,8 @@
     "remark-github": "^12.0.0",
     "remark-html": "^16.0.1",
     "remark-rehype": "^11.1.0",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.9.0"
   },
   "dependencies": {
     "@types/mdast": "^4.0.4",

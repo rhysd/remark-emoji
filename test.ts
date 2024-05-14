@@ -37,9 +37,9 @@ describe('remark-emoji', function () {
                 ':stuck_out_tongue_winking_eye:': '😜\n',
             };
 
-            for (const input of Object.keys(tests)) {
+            for (const [input, expected] of Object.entries(tests)) {
                 const result = await compiler.process(input);
-                assert.equal(String(result), tests[input], `input: ${JSON.stringify(input)}`);
+                assert.equal(String(result), expected, `input: ${JSON.stringify(input)}`);
             }
         });
 
@@ -50,9 +50,9 @@ describe('remark-emoji', function () {
                 '::': '::\n',
             };
 
-            for (const input of Object.keys(tests)) {
+            for (const [input, expected] of Object.entries(tests)) {
                 const result = await compiler.process(input);
-                assert.equal(String(result), tests[input], `input: ${JSON.stringify(input)}`);
+                assert.equal(String(result), expected, `input: ${JSON.stringify(input)}`);
             }
         });
 
@@ -65,9 +65,9 @@ describe('remark-emoji', function () {
                     '[here 🐶 and 🐱 and :-) pictures!](https://example.com)\n',
             };
 
-            for (const input of Object.keys(tests)) {
+            for (const [input, expected] of Object.entries(tests)) {
                 const result = await compiler.process(input);
-                assert.equal(String(result), tests[input], `input: ${JSON.stringify(input)}`);
+                assert.equal(String(result), expected, `input: ${JSON.stringify(input)}`);
             }
         });
 
@@ -86,9 +86,9 @@ describe('remark-emoji', function () {
                 'Smile :-), not >:(!': 'Smile :-), not >:(!\n',
             };
 
-            for (const input of Object.keys(tests)) {
+            for (const [input, expected] of Object.entries(tests)) {
                 const result = await padded.process(input);
-                assert.equal(String(result), tests[input], `input: ${JSON.stringify(input)}`);
+                assert.equal(String(result), expected, `input: ${JSON.stringify(input)}`);
             }
         });
 
@@ -132,9 +132,9 @@ describe('remark-emoji', function () {
                 ':triumph:': '😤\n',
             };
 
-            for (const input of Object.keys(tests)) {
+            for (const [input, expected] of Object.entries(tests)) {
                 const result = await emoticon.process(input);
-                assert.equal(String(result), tests[input], `input: ${JSON.stringify(input)}`);
+                assert.equal(String(result), expected, `input: ${JSON.stringify(input)}`);
             }
         });
 
@@ -145,9 +145,9 @@ describe('remark-emoji', function () {
                 '::': '::\n',
             };
 
-            for (const input of Object.keys(tests)) {
+            for (const [input, expected] of Object.entries(tests)) {
                 const result = await emoticon.process(input);
-                assert.equal(String(result), tests[input], `input: ${JSON.stringify(input)}`);
+                assert.equal(String(result), expected, `input: ${JSON.stringify(input)}`);
             }
         });
 
@@ -160,9 +160,9 @@ describe('remark-emoji', function () {
                     '[here 🐶 and 🐱 and 😃 pictures!](https://example.com)\n',
             };
 
-            for (const input of Object.keys(tests)) {
+            for (const [input, expected] of Object.entries(tests)) {
                 const result = await emoticon.process(input);
-                assert.equal(String(result), tests[input], `input: ${JSON.stringify(input)}`);
+                assert.equal(String(result), expected, `input: ${JSON.stringify(input)}`);
             }
         });
 
@@ -181,9 +181,9 @@ describe('remark-emoji', function () {
                 'Smile :-), not >:(!': 'Smile 😃 , not 😠 !\n',
             };
 
-            for (const input of Object.keys(tests)) {
+            for (const [input, expected] of Object.entries(tests)) {
                 const result = await padAndEmoticon.process(input);
-                assert.equal(String(result), tests[input], `input: ${JSON.stringify(input)}`);
+                assert.equal(String(result), expected, `input: ${JSON.stringify(input)}`);
             }
         });
 
@@ -203,9 +203,9 @@ describe('remark-emoji', function () {
                 'With double quotes :"D': 'With double quotes 😊\n',
             };
 
-            for (const input of Object.keys(tests)) {
+            for (const [input, expected] of Object.entries(tests)) {
                 const result = await emoticon.process(input);
-                assert.equal(String(result), tests[input], `input: ${JSON.stringify(input)}`);
+                assert.equal(String(result), expected, `input: ${JSON.stringify(input)}`);
             }
         });
 
@@ -229,9 +229,9 @@ describe('remark-emoji', function () {
                     '<p><span role="img" aria-label="stuck out tongue winking eye emoji">😜</span></p>\n',
             };
 
-            for (const input of Object.keys(tests)) {
+            for (const [input, expected] of Object.entries(tests)) {
                 const result = await ariaHtml.process(input);
-                assert.equal(String(result), tests[input], `input: ${JSON.stringify(input)}`);
+                assert.equal(String(result), expected, `input: ${JSON.stringify(input)}`);
             }
         });
     });
