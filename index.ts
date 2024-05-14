@@ -8,6 +8,9 @@ const RE_EMOJI = /:\+1:|:-1:|:[\w-]+:/g;
 const RE_SHORT = /[$@|*'",;.=:\-)([\]\\/<>038BOopPsSdDxXzZ]{2,5}/g;
 const RE_PUNCT = /(?:_|-(?!1))/g;
 
+/**
+ * Configuration of remark-emoji plugin.
+ */
 export interface RemarkEmojiOptions {
     /**
      * Makes converted emoji and emoticon texts accessible by wrapping them with
