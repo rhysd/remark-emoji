@@ -54,6 +54,7 @@
     "eslint-plugin-mocha": "^10.2.0",
     "eslint-plugin-n": "^16.2.0",
     "eslint-plugin-security": "^1.7.1",
+    "hast-util-sanitize": "^5.0.1",
     "mocha": "^10.4.0",
     "prettier": "^3.2.5",
     "rehype-autolink-headings": "^7.1.0",

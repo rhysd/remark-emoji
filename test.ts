@@ -8,12 +8,21 @@ import slug from 'rehype-slug';
 import remarkHtml from 'remark-html';
 import emoji from './index.js';
 import rehypeStringify from 'rehype-stringify';
+import { defaultSchema } from 'hast-util-sanitize';
+
+const schema = structuredClone(defaultSchema);
+assert.ok(schema.attributes);
+if ('span' in schema.attributes) {
+    schema.attributes['span'].push('role', 'ariaLabel');
+} else {
+    schema.attributes['span'] = ['role', 'ariaLabel'];
+}
 
 const compiler = remark().use(emoji);
 const padded = remark().use(emoji, { padSpaceAfter: true });
 const emoticon = remark().use(emoji, { emoticon: true });
 const padAndEmoticon = remark().use(emoji, { padSpaceAfter: true, emoticon: true });
-const ariaHtml = remark().use(emoji, { emoticon: true, accessible: true }).use(remarkHtml, { sanitize: false });
+const ariaHtml = remark().use(emoji, { emoticon: true, accessible: true }).use(remarkHtml, { sanitize: schema });
 const githubFlavor = remark().use(gfm).use(github).use(emoji);
 const toRehype = remark().use(emoji).use(rehype).use(slug).use(headings).use(rehypeStringify);
 
