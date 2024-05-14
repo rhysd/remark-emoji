@@ -3,7 +3,7 @@
   "version": "4.0.1",
   "type": "module",
   "engines": {
-    "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+    "node": ">=18"
   },
   "description": "Emoji transformer plugin for Remark",
   "exports": {
