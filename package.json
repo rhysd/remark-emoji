@@ -47,7 +47,7 @@
   "homepage": "https://github.com/rhysd/remark-emoji#readme",
   "devDependencies": {
     "@types/mocha": "^10.0.6",
-    "@types/node": "^20.12.11",
+    "@types/node": "^20.12.12",
     "concurrently": "^8.2.2",
     "eslint": "^8.52.0",
     "eslint-config-prettier": "^9.0.0",
@@ -67,10 +67,10 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@types/mdast": "^4.0.2",
+    "@types/mdast": "^4.0.4",
     "emoticon": "^4.0.1",
     "mdast-util-find-and-replace": "^3.0.1",
-    "node-emoji": "^2.1.0",
+    "node-emoji": "^2.1.3",
     "unified": "^11.0.4"
   }
 }

@@ -9,9 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        # node v22 cannot be added to this list until this issue is solved otherwise it causes SEGV
-        # https://github.com/nodejs/node/issues/52797
-        node: ['16', '18', '20']
+        node: ['18', '20', '22']
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
