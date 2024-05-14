@@ -22,7 +22,8 @@
     "watch": "tsc -w -p .",
     "format": "prettier -w '*.ts'",
     "mocha": "mocha --color test.js",
-    "test": "concurrently -m 1 -c auto npm:build npm:mocha"
+    "test": "concurrently -m 1 -c auto npm:build npm:mocha",
+    "prepare": "concurrently -m 1 -c auto npm:lint npm:build npm:test"
   },
   "repository": {
     "type": "git",
@@ -36,7 +37,7 @@
   ],
   "types": "index.d.ts",
   "files": [
-    "types/index.d.ts",
+    "index.d.ts",
     "index.js"
   ],
   "author": "rhysd <lin90162@yahoo.co.jp>",
