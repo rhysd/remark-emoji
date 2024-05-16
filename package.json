@@ -39,7 +39,8 @@
   "types": "index.d.ts",
   "files": [
     "index.d.ts",
-    "index.js"
+    "index.js",
+    "LICENSE"
   ],
   "author": "rhysd <lin90162@yahoo.co.jp>",
   "license": "MIT",
