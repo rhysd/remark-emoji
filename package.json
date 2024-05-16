@@ -16,11 +16,12 @@
   },
   "scripts": {
     "eslint": "eslint '*.ts' eslint.config.mjs",
-    "prettier": "prettier -c '*.ts'",
-    "lint": "concurrently -c auto npm:eslint npm:prettier",
+    "prettier": "prettier -c '*.ts' eslint.config.mjs",
+    "tsc-eslint": "tsc --pretty -p tsconfig.eslint.json",
+    "lint": "concurrently -c auto npm:eslint npm:prettier npm:tsc-eslint",
     "build": "tsc --pretty -p . -d",
     "watch": "tsc -w -p .",
-    "format": "prettier -w '*.ts'",
+    "format": "prettier -w '*.ts' eslint.config.mjs",
     "mocha": "mocha --color test.js",
     "test": "concurrently -m 1 -c auto npm:build npm:mocha",
     "prepare": "concurrently -m 1 -c auto npm:lint npm:build npm:test"
@@ -49,7 +50,9 @@
   "devDependencies": {
     "@eslint/js": "^9.2.0",
     "@types/eslint__js": "^8.42.3",
+    "@types/eslint-config-prettier": "^6.11.3",
     "@types/eslint-plugin-mocha": "^10.4.0",
+    "@types/eslint-plugin-security": "^3.0.0",
     "@types/mocha": "^10.0.6",
     "@types/node": "^20.12.12",
     "concurrently": "^8.2.2",
