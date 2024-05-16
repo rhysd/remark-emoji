@@ -4,7 +4,7 @@ remark-emoji
 [![npm][npm-badge]][npm]
 
 [remark-emoji][npm] is a [remark](https://github.com/remarkjs/remark) plugin to replace `:emoji:` to real UTF-8
-emojis in text. Accessibility support and Emoticon support are optionally available.
+emojis in Markdown text. Accessibility support and Emoticon support are optionally available.
 
 ## Demo
 
@@ -17,15 +17,15 @@ remark().use(emoji [, options]);
 ```
 
 ```javascript
-import {remark} from 'remark';
+import { remark } from 'remark';
 import emoji from 'remark-emoji';
 
-const doc = 'Emojis in this text will be replaced: :dog: :+1:';
+const doc = 'Emojis in this text will be replaced: :dog::+1:';
 const processor = remark().use(emoji);
 const file = await processor.process(doc);
 
 console.log(String(file));
-// => Emojis in this text will be replaced: 🐶 👍
+// => Emojis in this text will be replaced: 🐶👍
 ```
 
 Note that this package is [ESM only][esm-only] from v3.0.0 since remark packages migrated to ESM.
@@ -36,15 +36,17 @@ Note that this package is [ESM only][esm-only] from v3.0.0 since remark packages
 
 Setting to `true` makes the converted emoji text accessible with `role` and `aria-label` attributes. Each emoji
 text is wrapped with `<span>` element. The `role` and `aria-label` attribute are not allowed by default. Please
-add them to the sanitization schema used by remark's HTML transformer.
+add them to the sanitization schema used by remark's HTML transformer. The default sanitization schema is defined
+in [hast-util-sanitize](https://www.npmjs.com/package/hast-util-sanitize) package.
 
 For example,
 
 ```javascript
-import {remark} from 'remark';
+import remarkParse from 'remark-parse';
 import toHtml from 'remark-html';
-import {defaultSchema} from 'hast-util-sanitize'
+import { defaultSchema } from 'hast-util-sanitize'
 import emoji from 'remark-emoji';
+import { unified } from 'unified'
 
 // Allow using `role` and `aria-label` attributes in transformed HTML document
 const schema = structuredClone(defaultSchema);
@@ -54,7 +56,8 @@ if ('span' in schema.attributes) {
     schema.attributes.span = ['role', 'ariaLabel'];
 }
 
-const processor = remark()
+const processor = unified()
+    .use(remarkParse)
     .use(emoji, { accessible: true })
     .use(toHtml, { sanitize: schema });
 const file = await processor.process('Hello :dog:!');
@@ -95,8 +98,8 @@ Distributed under [the MIT License](LICENSE).
 
 
 
-[ci-badge]: https://github.com/rhysd/remark-emoji/workflows/CI/badge.svg?branch=master&event=push
-[ci]: https://github.com/rhysd/remark-emoji/actions?query=workflow%3ACI
+[ci-badge]: https://github.com/rhysd/remark-emoji/actions/workflows/ci.yml/badge.svg
+[ci]: https://github.com/rhysd/remark-emoji/actions/workflows/ci.yml
 [npm-badge]: https://badge.fury.io/js/remark-emoji.svg
 [npm]: https://www.npmjs.com/package/remark-emoji
 [esm-only]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
