@@ -4,11 +4,12 @@ remark-emoji
 [![npm][npm-badge]][npm]
 
 [remark-emoji][npm] is a [remark](https://github.com/remarkjs/remark) plugin to replace `:emoji:` to real UTF-8
-emojis in Markdown text. Accessibility support and Emoticon support are optionally available.
+emojis in Markdown text. This plugin is built on top of [node-emoji](https://www.npmjs.com/package/node-emoji).
+The accessibility support and [Emoticon](https://en.wikipedia.org/wiki/Emoticon) support are optionally available.
 
 ## Demo
 
-You can find a demo in the following [Codesandbox](https://codesandbox.io/s/remark-emoji-example-osvyi).
+You can find a demo in the following [Codesandbox](https://codesandbox.io/p/sandbox/remark-emoji-example-w6yrmm).
 
 ## Usage
 
@@ -28,7 +29,10 @@ console.log(String(file));
 // => Emojis in this text will be replaced: 🐶👍
 ```
 
-Note that this package is [ESM only][esm-only] from v3.0.0 since remark packages migrated to ESM.
+Note:
+
+- This package is [ESM only][esm-only] from v3.0.0 since remark packages migrated to ESM.
+- This package supports Node.js v18 or later.
 
 ## Options
 
