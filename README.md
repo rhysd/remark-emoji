@@ -40,17 +40,18 @@ Note:
 
 Setting to `true` makes the converted emoji text accessible with `role` and `aria-label` attributes. Each emoji
 text is wrapped with `<span>` element. The `role` and `aria-label` attribute are not allowed by default. Please
-add them to the sanitization schema used by remark's HTML transformer. The default sanitization schema is defined
-in [hast-util-sanitize](https://www.npmjs.com/package/hast-util-sanitize) package.
+add them to the sanitization schema used by remark's HTML transformer. The default sanitization schema is exported
+from [rehype-sanitize](https://www.npmjs.com/package/rehype-sanitize) package.
 
 For example,
 
 ```javascript
 import remarkParse from 'remark-parse';
-import toHtml from 'remark-html';
-import { defaultSchema } from 'hast-util-sanitize'
+import toRehype from 'remark-rehype';
+import sanitize, { defaultSchema } from 'rehype-sanitize';
+import stringify from 'rehype-stringify';
 import emoji from 'remark-emoji';
-import { unified } from 'unified'
+import { unified } from 'unified';
 
 // Allow using `role` and `aria-label` attributes in transformed HTML document
 const schema = structuredClone(defaultSchema);
@@ -60,10 +61,14 @@ if ('span' in schema.attributes) {
     schema.attributes.span = ['role', 'ariaLabel'];
 }
 
+// Markdown text processor pipeline
 const processor = unified()
     .use(remarkParse)
     .use(emoji, { accessible: true })
-    .use(toHtml, { sanitize: schema });
+    .use(toRehype)
+    .use(sanitize, schema)
+    .use(stringify);
+
 const file = await processor.process('Hello :dog:!');
 console.log(String(file));
 ```

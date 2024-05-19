@@ -1,14 +1,15 @@
 import assert from 'assert';
 import { remark } from 'remark';
+import { unified } from 'unified';
+import remarkParse from 'remark-parse';
 import gfm from 'remark-gfm';
 import github from 'remark-github';
-import rehype from 'remark-rehype';
+import remarkRehype from 'remark-rehype';
 import headings from 'rehype-autolink-headings';
 import slug from 'rehype-slug';
-import remarkHtml from 'remark-html';
 import emoji from './index.js';
 import rehypeStringify from 'rehype-stringify';
-import { defaultSchema } from 'hast-util-sanitize';
+import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 
 const schema = structuredClone(defaultSchema);
 assert.ok(schema.attributes);
@@ -22,9 +23,14 @@ const compiler = remark().use(emoji);
 const padded = remark().use(emoji, { padSpaceAfter: true });
 const emoticon = remark().use(emoji, { emoticon: true });
 const padAndEmoticon = remark().use(emoji, { padSpaceAfter: true, emoticon: true });
-const ariaHtml = remark().use(emoji, { emoticon: true, accessible: true }).use(remarkHtml, { sanitize: schema });
+const ariaHtml = unified()
+    .use(remarkParse)
+    .use(emoji, { emoticon: true, accessible: true })
+    .use(remarkRehype)
+    .use(rehypeSanitize, schema)
+    .use(rehypeStringify);
 const githubFlavor = remark().use(gfm).use(github).use(emoji);
-const toRehype = remark().use(emoji).use(rehype).use(slug).use(headings).use(rehypeStringify);
+const toRehype = unified().use(remarkParse).use(emoji).use(remarkRehype).use(slug).use(headings).use(rehypeStringify);
 
 describe('remark-emoji', function () {
     describe('minimal compiler', function () {
@@ -219,14 +225,14 @@ describe('remark-emoji', function () {
     describe('accessibility support', function () {
         it('wraps emoji with span', async function () {
             const tests: Record<string, string> = {
-                ':dog:': '<p><span role="img" aria-label="dog emoji">🐶</span></p>\n',
+                ':dog:': '<p><span role="img" aria-label="dog emoji">🐶</span></p>',
                 ':dog: :cat:':
-                    '<p><span role="img" aria-label="dog emoji">🐶</span> <span role="img" aria-label="cat emoji">🐱</span></p>\n',
-                ':-)': '<p><span role="img" aria-label="smiley emoticon">😃</span></p>\n',
-                ':+1:': '<p><span role="img" aria-label="+1 emoji">👍</span></p>\n',
-                ':-1:': '<p><span role="img" aria-label="-1 emoji">👎</span></p>\n',
+                    '<p><span role="img" aria-label="dog emoji">🐶</span> <span role="img" aria-label="cat emoji">🐱</span></p>',
+                ':-)': '<p><span role="img" aria-label="smiley emoticon">😃</span></p>',
+                ':+1:': '<p><span role="img" aria-label="+1 emoji">👍</span></p>',
+                ':-1:': '<p><span role="img" aria-label="-1 emoji">👎</span></p>',
                 ':stuck_out_tongue_winking_eye:':
-                    '<p><span role="img" aria-label="stuck out tongue winking eye emoji">😜</span></p>\n',
+                    '<p><span role="img" aria-label="stuck out tongue winking eye emoji">😜</span></p>',
             };
 
             for (const [input, expected] of Object.entries(tests)) {
