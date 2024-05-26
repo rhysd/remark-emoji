@@ -1,6 +1,6 @@
 {
   "name": "remark-emoji",
-  "version": "4.0.1",
+  "version": "5.0.0",
   "type": "module",
   "engines": {
     "node": ">=18"
