@@ -2,7 +2,7 @@ import { get as getEmoji } from 'node-emoji';
 import { emoticon } from 'emoticon';
 import { findAndReplace, type Find, type Replace } from 'mdast-util-find-and-replace';
 import type { Plugin } from 'unified';
-import type { Root, Nodes, Text } from 'mdast';
+import type { Root, Nodes, Html } from 'mdast';
 
 const RE_EMOJI = /:\+1:|:-1:|:[\w-]+:/g;
 const RE_SHORT = /[$@|*'",;.=:\-)([\]\\/<>038BOopPsSdDxXzZ]{2,5}/g;
@@ -33,12 +33,34 @@ export interface RemarkEmojiOptions {
      * @defaultValue false
      */
     emoticon?: boolean;
+    /**
+     * An array of CustomEmoji
+     *
+     * @defaultValue []
+     */
+    customEmojis?: CustomEmoji[];
+}
+
+export interface CustomEmoji {
+    /**
+     * The list of strings to match for this particular custom emoji
+     */
+    names: string[];
+    /**
+     * The url to the image to be used
+     */
+    url: string;
+    /**
+     * a friendly title for the emoji
+     */
+    title: string;
 }
 
 const DEFAULT_SETTINGS: RemarkEmojiOptions = {
     padSpaceAfter: false,
     emoticon: false,
     accessible: false,
+    customEmojis: [],
 };
 
 const plugin: Plugin<[(RemarkEmojiOptions | null | undefined)?], Root> = options => {
@@ -47,24 +69,35 @@ const plugin: Plugin<[(RemarkEmojiOptions | null | undefined)?], Root> = options
     const emoticonEnable = !!settings.emoticon;
     const accessible = !!settings.accessible;
 
-    function aria(text: string, label: string): Text {
-        // Creating HTML node in Markdown node is undocumented.
-        // https://github.com/syntax-tree/mdast-util-math/blob/e70bb824dc70f5423324b31b0b68581cf6698fe8/index.js#L44-L55
+    function parseCustomEmoji(customEmojis: CustomEmoji[]): Map<string, Html> {
+        const map = new Map<string, Html>();
+        for (const customEmoji of customEmojis) {
+            const mdast: Html = {
+                type: 'html',
+                value: `<img src='${customEmoji.url.replace(
+                    /'/gu,
+                    '%27',
+                )}' style='height: 1em' title='${customEmoji.title.replace(/'/gu, '&apos;')}'/>${pad ? '&nbsp;' : ''}`,
+            };
+            for (const name of customEmoji.names) {
+                map.set(`:${name}:`, mdast);
+            }
+        }
+
+        return map;
+    }
+    const customEmojis = parseCustomEmoji(settings.customEmojis ?? []);
+
+    function aria(text: string | Html, label: string): Html {
+        const value: string = typeof text === 'object' ? text.value : text;
+
         return {
-            type: 'text',
-            value: text,
-            data: {
-                hName: 'span',
-                hProperties: {
-                    role: 'img',
-                    ariaLabel: label,
-                },
-                hChildren: [{ type: 'text', value: text }],
-            },
+            type: 'html',
+            value: `<span role="img" aria-label="${label}">${value}</span>`,
         };
     }
 
-    function replaceEmoticon(match: string): string | false | Text {
+    function replaceEmoticon(match: string): string | false | Html {
         // find emoji by shortcode - full match or with-out last char as it could be from text e.g. :-),
         const iconFull = emoticon.find(e => e.emoticons.includes(match)); // full match
         const iconPart = emoticon.find(e => e.emoticons.includes(match.slice(0, -1))); // second search pattern
@@ -81,15 +114,19 @@ const plugin: Plugin<[(RemarkEmojiOptions | null | undefined)?], Root> = options
         return replaced;
     }
 
-    function replaceEmoji(match: string): string | false | Text {
-        let got = getEmoji(match);
+    function replaceEmoji(match: string): string | false | Html {
+        let got: Html | string | undefined = customEmojis.get(match);
 
-        if (typeof got === 'undefined') {
-            return false;
-        }
+        if (!got) {
+            got = getEmoji(match);
 
-        if (pad) {
-            got = got + ' ';
+            if (!got) {
+                return false;
+            }
+
+            if (pad) {
+                got = got + ' ';
+            }
         }
 
         if (accessible) {
