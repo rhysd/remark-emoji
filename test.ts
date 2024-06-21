@@ -250,20 +250,23 @@ describe('remark-emoji', function () {
 
     describe('custom emoji support', function () {
         it('should turn a custom emoji to an image', async function() {
-            const result = await customHtml.process("We've got a :party-parrot: in the house!");
+            const result = await customHtml.process('We\'ve got a :party-parrot: in the house!');
             assert.equal(String(result), `We've got a <img src='${customEmojis[0].url}' style='height: 1em' title='${customEmojis[0].title}'/> in the house!\n`);
         });
+
         it('wraps custom emoji with span', async function () {
-            const result = await customAriaHtml.process("We've got a :party-parrot: in the house!");
+            const result = await customAriaHtml.process('We\'ve got a :party-parrot: in the house!');
             assert.equal(String(result), `We've got a <span role="img" aria-label="${customEmojis[0].title} emoji"><img src='${customEmojis[0].url}' style='height: 1em' title='${customEmojis[0].title}'/></span> in the house!\n`);
         });
+
         it('should include a trailing space', async function() {
-            const result = await customWithPadHtml.process("We've got a :party-parrot: in the house!");
+            const result = await customWithPadHtml.process('We\'ve got a :party-parrot: in the house!');
             assert.equal(String(result), `We've got a <img src='${customEmojis[0].url}' style='height: 1em' title='${customEmojis[0].title}'/>&nbsp; in the house!\n`);
         });
+
         it('should work with emoticons', async function() {
-            const result = await customHtml.process("We've got a :party-parrot: :p in the house!");
+            const result = await customHtml.process('We\'ve got a :party-parrot: :p in the house!');
             assert.equal(String(result), `We've got a <img src='${customEmojis[0].url}' style='height: 1em' title='${customEmojis[0].title}'/> 😛 in the house!\n`);
         });
-    })
+    });
 });
