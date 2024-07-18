@@ -40,6 +40,7 @@
   "files": [
     "index.d.ts",
     "index.js",
+    "index.js.map",
     "LICENSE"
   ],
   "author": "rhysd <lin90162@yahoo.co.jp>",
