@@ -9,7 +9,7 @@ import headings from 'rehype-autolink-headings';
 import slug from 'rehype-slug';
 import emoji from './index.js';
 import rehypeStringify from 'rehype-stringify';
-import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
+import { defaultSchema } from 'rehype-sanitize';
 
 const schema = structuredClone(defaultSchema);
 assert.ok(schema.attributes);
@@ -23,14 +23,20 @@ const compiler = remark().use(emoji);
 const padded = remark().use(emoji, { padSpaceAfter: true });
 const emoticon = remark().use(emoji, { emoticon: true });
 const padAndEmoticon = remark().use(emoji, { padSpaceAfter: true, emoticon: true });
-const ariaHtml = unified()
-    .use(remarkParse)
-    .use(emoji, { emoticon: true, accessible: true })
-    .use(remarkRehype)
-    .use(rehypeSanitize, schema)
-    .use(rehypeStringify);
+const ariaHtml = remark().use(emoji, { emoticon: true, accessible: true });
 const githubFlavor = remark().use(gfm).use(github).use(emoji);
 const toRehype = unified().use(remarkParse).use(emoji).use(remarkRehype).use(slug).use(headings).use(rehypeStringify);
+
+const customEmojis = [
+    {
+        names: ['parrot', 'partyparrot', 'party-parrot', 'party_parrot'],
+        url: 'https://cultofthepartyparrot.com/parrots/parrot.gif',
+        title: 'party parrot',
+    },
+];
+const customHtml = remark().use(emoji, { emoticon: true, customEmojis });
+const customAriaHtml = remark().use(emoji, { accessible: true, customEmojis });
+const customWithPadHtml = remark().use(emoji, { padSpaceAfter: true, emoticon: true, customEmojis });
 
 describe('remark-emoji', function () {
     describe('minimal compiler', function () {
@@ -225,20 +231,42 @@ describe('remark-emoji', function () {
     describe('accessibility support', function () {
         it('wraps emoji with span', async function () {
             const tests: Record<string, string> = {
-                ':dog:': '<p><span role="img" aria-label="dog emoji">🐶</span></p>',
+                ':dog:': '<span role="img" aria-label="dog emoji">🐶</span>\n',
                 ':dog: :cat:':
-                    '<p><span role="img" aria-label="dog emoji">🐶</span> <span role="img" aria-label="cat emoji">🐱</span></p>',
-                ':-)': '<p><span role="img" aria-label="smiley emoticon">😃</span></p>',
-                ':+1:': '<p><span role="img" aria-label="+1 emoji">👍</span></p>',
-                ':-1:': '<p><span role="img" aria-label="-1 emoji">👎</span></p>',
+                    '<span role="img" aria-label="dog emoji">🐶</span> <span role="img" aria-label="cat emoji">🐱</span>\n',
+                ':-)': '<span role="img" aria-label="smiley emoticon">😃</span>\n',
+                ':+1:': '<span role="img" aria-label="+1 emoji">👍</span>\n',
+                ':-1:': '<span role="img" aria-label="-1 emoji">👎</span>\n',
                 ':stuck_out_tongue_winking_eye:':
-                    '<p><span role="img" aria-label="stuck out tongue winking eye emoji">😜</span></p>',
+                    '<span role="img" aria-label="stuck out tongue winking eye emoji">😜</span>\n',
             };
 
             for (const [input, expected] of Object.entries(tests)) {
                 const result = await ariaHtml.process(input);
                 assert.equal(String(result), expected, `input: ${JSON.stringify(input)}`);
             }
+        });
+    });
+
+    describe('custom emoji support', function () {
+        it('should turn a custom emoji to an image', async function() {
+            const result = await customHtml.process('We\'ve got a :party-parrot: in the house!');
+            assert.equal(String(result), `We've got a <img src='${customEmojis[0].url}' style='height: 1em' title='${customEmojis[0].title}'/> in the house!\n`);
+        });
+
+        it('wraps custom emoji with span', async function () {
+            const result = await customAriaHtml.process('We\'ve got a :party-parrot: in the house!');
+            assert.equal(String(result), `We've got a <span role="img" aria-label="${customEmojis[0].title} emoji"><img src='${customEmojis[0].url}' style='height: 1em' title='${customEmojis[0].title}'/></span> in the house!\n`);
+        });
+
+        it('should include a trailing space', async function() {
+            const result = await customWithPadHtml.process('We\'ve got a :party-parrot: in the house!');
+            assert.equal(String(result), `We've got a <img src='${customEmojis[0].url}' style='height: 1em' title='${customEmojis[0].title}'/>&nbsp; in the house!\n`);
+        });
+
+        it('should work with emoticons', async function() {
+            const result = await customHtml.process('We\'ve got a :party-parrot: :p in the house!');
+            assert.equal(String(result), `We've got a <img src='${customEmojis[0].url}' style='height: 1em' title='${customEmojis[0].title}'/> 😛 in the house!\n`);
         });
     });
 });
