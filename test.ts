@@ -200,6 +200,9 @@ describe('remark-emoji', function () {
 
         it('handles emoji shortcodes (emoticon)', async function () {
             const tests: Record<string, string> = {
+                'with space :o, and comma': 'with space 😮, and comma\n',
+                'WARN:Danger': 'WARN:Danger\n',
+                'https://github.com': 'https://github.com\n',
                 ':p': '😛\n',
                 ':-)': '😃\n',
                 'With-in some text :-p, also with some  :o spaces :-)!':
