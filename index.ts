@@ -5,7 +5,7 @@ import type { Plugin } from 'unified';
 import type { Root, Nodes, Text } from 'mdast';
 
 const RE_EMOJI = /:\+1:|:-1:|:[\w-]+:/g;
-const RE_SHORT = /[$@|*'",;.=:\-)([\]\\/<>038BOopPsSdDxXzZ]{2,5}/g;
+const RE_SHORT = /(^|\s)[@$|*'",;.=:\-)([\]\\/<>038BOopPsSdDxXzZ]{2,5}/g;
 const RE_PUNCT = /(?:_|-(?!1))/g;
 
 /**
@@ -67,14 +67,17 @@ const plugin: Plugin<[(RemarkEmojiOptions | null | undefined)?], Root> = options
     function replaceEmoticon(match: string): string | false | Text {
         // find emoji by shortcode - full match or with-out last char as it could be from text e.g. :-),
         const iconFull = emoticon.find(e => e.emoticons.includes(match)); // full match
-        const iconPart = emoticon.find(e => e.emoticons.includes(match.slice(0, -1))); // second search pattern
-        const icon = iconFull || iconPart;
+        const iconPartStart = emoticon.find(e => e.emoticons.includes(match.slice(0, -1))); // second search pattern
+        const iconPartEnd = emoticon.find(e => e.emoticons.includes(match.slice(1)));
+        const iconPart = emoticon.find(e => e.emoticons.includes(match.slice(1, -1)));
+        const icon = iconFull || iconPartStart || iconPartEnd || iconPart;
         if (!icon) {
             return false;
         }
-        const trimmedChar = !iconFull && iconPart ? match.slice(-1) : '';
+        const trimmedChar = !(iconFull || iconPartEnd) && (iconPart || iconPartStart) ? match.slice(-1) : '';
+        const startTrimmedChar = !(iconFull || iconPartStart) && (iconPart || iconPartEnd) ? match.slice(0, 1) : '';
         const addPad = pad ? ' ' : '';
-        const replaced = icon.emoji + addPad + trimmedChar;
+        const replaced = startTrimmedChar + icon.emoji + addPad + trimmedChar;
         if (accessible) {
             return aria(replaced, icon.name + ' emoticon');
         }

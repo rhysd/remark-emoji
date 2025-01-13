@@ -1,11 +1,7 @@
 remark-emoji
 ============
-[![CI][ci-badge]][ci]
-[![npm][npm-badge]][npm]
 
-[remark-emoji][npm] is a [remark](https://github.com/remarkjs/remark) plugin to replace `:emoji:` to real UTF-8
-emojis in Markdown text. This plugin is built on top of [node-emoji](https://www.npmjs.com/package/node-emoji).
-The accessibility support and [Emoticon](https://en.wikipedia.org/wiki/Emoticon) support are optionally available.
+This is a fork of [remark-emoji](https://github.com/rhysd/remark-emoji) with a fix for mid-word emoctions bug, suggested by [benkenawell](https://github.com/benkenawell) in his [PR](https://github.com/rhysd/remark-emoji/pull/37).
 
 ## Demo
 
