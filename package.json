@@ -1,11 +1,11 @@
 {
-  "name": "remark-emoji",
-  "version": "5.0.1",
+  "name": "@baz-scm/remark-emoji",
+  "version": "5.0.2",
   "type": "module",
   "engines": {
     "node": ">=18"
   },
-  "description": "Emoji transformer plugin for Remark",
+  "description": "Fork of remark-emoji",
   "exports": {
     ".": {
       "import": {
@@ -28,7 +28,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rhysd/remark-emoji.git"
+    "url": "git+https://github.com/baz-scm/remark-emoji"
   },
   "keywords": [
     "markdown",
@@ -43,12 +43,9 @@
     "index.js.map",
     "LICENSE"
   ],
-  "author": "rhysd <lin90162@yahoo.co.jp>",
+  "author": "Baz",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/rhysd/remark-emoji/issues"
-  },
-  "homepage": "https://github.com/rhysd/remark-emoji#readme",
+  "homepage": "https://github.com/baz-scm/remark-emoji",
   "dependencies": {
     "@types/mdast": "^4.0.4",
     "emoticon": "^4.0.1",
