@@ -210,6 +210,7 @@ describe('remark-emoji', function () {
                 'Four char code ]:-)': 'Four char code 😈\n',
                 'No problem with :dog: - :d': 'No problem with 🐶 - 😛\n',
                 'With double quotes :"D': 'With double quotes 😊\n',
+                'X-pac': 'X-pac\n',
             };
 
             for (const [input, expected] of Object.entries(tests)) {
