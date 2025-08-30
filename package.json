@@ -1,6 +1,6 @@
 {
   "name": "remark-emoji",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "type": "module",
   "engines": {
     "node": ">=18"
@@ -8,10 +8,8 @@
   "description": "Emoji transformer plugin for Remark",
   "exports": {
     ".": {
-      "import": {
-        "types": "./index.d.ts",
-        "default": "./index.js"
-      }
+      "types": "./index.d.ts",
+      "default": "./index.js"
     }
   },
   "scripts": {
