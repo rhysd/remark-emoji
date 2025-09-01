@@ -47,14 +47,19 @@ export default ts.config(
             },
         },
     },
-    mocha.configs.flat.recommended,
+    {
+        files: ['test.ts'],
+        // The cast is workaround for https://github.com/lo1tuma/eslint-plugin-mocha/issues/392
+        .../** @type {{recommended: import('eslint').Linter.Config}} */ (mocha.configs).recommended,
+    },
     {
         files: ['test.ts'],
         rules: {
+            'mocha/consistent-spacing-between-blocks': 'off', // Conflict with prettier
             'mocha/no-exclusive-tests': 'error',
             'mocha/no-pending-tests': 'error',
-            'mocha/no-skipped-tests': 'error',
             'mocha/no-top-level-hooks': 'error',
+            'mocha/consistent-interface': ['error', { interface: 'BDD' }],
         },
     }
 );
